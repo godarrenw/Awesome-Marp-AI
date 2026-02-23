@@ -684,7 +684,7 @@ section.cols-3 .rimg { grid-area: rightpanel; display: flex; align-items: center
 section.rows-2 {
   overflow: visible;
   display: grid;
-  gap: 0.8rem;
+  gap: 0.4rem;
   grid-template-rows: auto 1fr 1fr;
   grid-template-columns: 100%;
   grid-template-areas:
@@ -702,7 +702,7 @@ section.rows-2 .bimg { grid-area: bottompanel; display: flex; align-items: cente
 section.rows-2-64 {
   overflow: visible;
   display: grid;
-  gap: 0.8rem;
+  gap: 0.4rem;
   grid-template-rows: auto 3fr 2fr;
   grid-template-columns: 100%;
   grid-template-areas:
@@ -720,7 +720,7 @@ section.rows-2-64 .bimg { grid-area: bottompanel; display: flex; align-items: ce
 section.rows-2-73 {
   overflow: visible;
   display: grid;
-  gap: 0.8rem;
+  gap: 0.4rem;
   grid-template-rows: auto 7fr 3fr;
   grid-template-columns: 100%;
   grid-template-areas:
@@ -738,7 +738,7 @@ section.rows-2-73 .bimg { grid-area: bottompanel; display: flex; align-items: ce
 section.rows-2-46 {
   overflow: visible;
   display: grid;
-  gap: 0.8rem;
+  gap: 0.4rem;
   grid-template-rows: auto 2fr 3fr;
   grid-template-columns: 100%;
   grid-template-areas:
@@ -756,7 +756,7 @@ section.rows-2-46 .bimg { grid-area: bottompanel; display: flex; align-items: ce
 section.rows-2-37 {
   overflow: visible;
   display: grid;
-  gap: 0.8rem;
+  gap: 0.4rem;
   grid-template-rows: auto 3fr 7fr;
   grid-template-columns: 100%;
   grid-template-areas:
@@ -906,7 +906,7 @@ section.footnote {
   grid-template-areas: "content" "footnote";
 }
 section.footnote .tdiv {
-  grid-area: "content";
+  grid-area: content;
 }
 section.footnote .tdiv > h2, section.footnote .tdiv > h3,
 section.footnote .tdiv > h4, section.footnote .tdiv > h5 {
@@ -914,7 +914,7 @@ section.footnote .tdiv > h4, section.footnote .tdiv > h5 {
   margin-top: -0.6em;
 }
 section.footnote .bdiv {
-  grid-area: "footnote";
+  grid-area: footnote;
   font-size: 80%;
   color: var(--color-text-secondary);
 }
