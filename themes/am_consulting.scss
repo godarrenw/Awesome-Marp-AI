@@ -902,13 +902,13 @@ section.bq-black blockquote > p:nth-child(1) strong {
 section.footnote {
   display: grid;
   gap: 0.5em;
-  grid-template-rows: 1fr auto;
-  grid-template-areas: "content" "footnote";
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "slideheading" "content" "footnote";
 }
+section.footnote h2, section.footnote h3 { grid-area: slideheading; }
 section.footnote .tdiv {
   grid-area: content;
 }
-section.footnote .tdiv > h2, section.footnote .tdiv > h3,
 section.footnote .tdiv > h4, section.footnote .tdiv > h5 {
   margin-bottom: 0.8em;
   margin-top: -0.6em;
