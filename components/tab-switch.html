@@ -1,0 +1,149 @@
+<!--
+  Component: Tab Switch
+  Category: JS-interactive (HTML output only)
+  Usage: Copy <style scoped>, HTML, and <script> block into your Marp slide
+  Parameters: Replace {{TAB_1}}..{{TAB_4}} with tab labels;
+              Replace {{PANEL_1}}..{{PANEL_4}} with tab panel content (supports HTML)
+  PDF Fallback: First tab panel visible, all tab buttons shown with first highlighted
+-->
+
+<!-- ===== Variant 1: Parameterized 4-Tab Panel ===== -->
+<style scoped>
+.ts-container {
+  margin: 0.6em 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.ts-tabs {
+  display: flex;
+  gap: 0.15em;
+  border-bottom: 2px solid #e0e6e2;
+  margin-bottom: 0;
+}
+.ts-tab {
+  padding: 0.55em 1.2em;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #5a6b5e;
+  background: #eef2ef;
+  border: none;
+  border-radius: 0.35em 0.35em 0 0;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  letter-spacing: 0.015em;
+  position: relative;
+  bottom: -2px;
+  border-bottom: 2px solid transparent;
+}
+.ts-tab:hover {
+  background: #dce5de;
+  color: #2d3a32;
+}
+.ts-tab.ts-active {
+  background: #fff;
+  color: #1a5c38;
+  border-bottom: 2px solid #1a5c38;
+  box-shadow: 0 -0.1em 0.25em rgba(0,0,0,0.04);
+}
+.ts-panels {
+  position: relative;
+  background: #fff;
+  border-radius: 0 0.35em 0.35em 0.35em;
+  box-shadow: 0 0.1em 0.4em rgba(0,0,0,0.06);
+  min-height: 5em;
+  overflow: hidden;
+}
+.ts-panel {
+  padding: 1em 1.2em;
+  font-size: 0.8em;
+  color: #2d3a32;
+  line-height: 1.65;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.ts-panel.ts-visible {
+  display: block;
+  opacity: 1;
+}
+.ts-panel h4 {
+  margin: 0 0 0.4em 0;
+  color: #1a5c38;
+  font-size: 1.05em;
+}
+.ts-panel ul {
+  margin: 0.3em 0;
+  padding-left: 1.2em;
+}
+.ts-panel li {
+  margin: 0.2em 0;
+}
+</style>
+
+<div class="ts-container">
+  <div class="ts-tabs">
+    <button class="ts-tab ts-active" data-ts-target="0">{{TAB_1}}</button>
+    <button class="ts-tab" data-ts-target="1">{{TAB_2}}</button>
+    <button class="ts-tab" data-ts-target="2">{{TAB_3}}</button>
+    <button class="ts-tab" data-ts-target="3">{{TAB_4}}</button>
+  </div>
+  <div class="ts-panels">
+    <div class="ts-panel ts-visible" data-ts-index="0">
+      {{PANEL_1}}
+    </div>
+    <div class="ts-panel" data-ts-index="1">
+      {{PANEL_2}}
+    </div>
+    <div class="ts-panel" data-ts-index="2">
+      {{PANEL_3}}
+    </div>
+    <div class="ts-panel" data-ts-index="3">
+      {{PANEL_4}}
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var script = document.currentScript;
+  var slide = script.closest('section') || script.parentElement;
+  var container = slide.querySelector('.ts-container');
+  if (!container) return;
+
+  var tabs = container.querySelectorAll('.ts-tab');
+  var panels = container.querySelectorAll('.ts-panel');
+
+  function switchTo(index) {
+    tabs.forEach(function (tab) {
+      tab.classList.toggle('ts-active', tab.getAttribute('data-ts-target') === String(index));
+    });
+
+    panels.forEach(function (panel) {
+      var isTarget = panel.getAttribute('data-ts-index') === String(index);
+      if (isTarget) {
+        panel.style.display = 'block';
+        // Trigger reflow for transition
+        void panel.offsetHeight;
+        panel.classList.add('ts-visible');
+      } else {
+        panel.classList.remove('ts-visible');
+        // Delay hiding to allow fade out
+        (function (p) {
+          setTimeout(function () {
+            if (!p.classList.contains('ts-visible')) {
+              p.style.display = 'none';
+            }
+          }, 260);
+        })(panel);
+      }
+    });
+  }
+
+  container.querySelector('.ts-tabs').addEventListener('click', function (e) {
+    var tab = e.target.closest('.ts-tab');
+    if (!tab) return;
+    var target = parseInt(tab.getAttribute('data-ts-target'), 10);
+    switchTo(target);
+  });
+})();
+</script>

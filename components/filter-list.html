@@ -1,0 +1,226 @@
+<!--
+  Component: Filter List
+  Category: JS-interactive (HTML output only)
+  Usage: Copy <style scoped>, HTML, and <script> block into your Marp slide
+  Parameters: Replace {{CAT_1}}..{{CAT_4}} with category labels;
+              Replace {{ITEM_N_TITLE}} with item titles;
+              Replace {{ITEM_N_DESC}} with item descriptions;
+              Set data-fl-cat="category" on each item to match a category button's data-fl-filter value
+  PDF Fallback: All items visible with category buttons shown, "All" highlighted
+-->
+
+<!-- ===== Variant 1: Parameterized Category Filter List ===== -->
+<style scoped>
+.fl-container {
+  margin: 0.5em 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.fl-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  margin-bottom: 0.8em;
+}
+.fl-btn {
+  padding: 0.4em 1em;
+  font-size: 0.75em;
+  font-weight: 600;
+  color: #3a5040;
+  background: #e6ede8;
+  border: 1.5px solid #c8d9ce;
+  border-radius: 2em;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  letter-spacing: 0.015em;
+}
+.fl-btn:hover {
+  background: #d0e3d6;
+  border-color: #a8c4b0;
+}
+.fl-btn.fl-active {
+  background: #1a5c38;
+  color: #fff;
+  border-color: #1a5c38;
+  box-shadow: 0 0.1em 0.3em rgba(26,92,56,0.25);
+}
+.fl-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+.fl-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7em;
+  padding: 0.65em 0.9em;
+  background: #fff;
+  border-radius: 0.4em;
+  box-shadow: 0 0.08em 0.25em rgba(0,0,0,0.06);
+  border-left: 3px solid #1a5c38;
+  transition: opacity 0.25s ease, transform 0.25s ease, max-height 0.3s ease;
+  overflow: hidden;
+}
+.fl-item.fl-hidden {
+  opacity: 0;
+  max-height: 0;
+  padding: 0 0.9em;
+  margin: 0;
+  border-width: 0;
+  box-shadow: none;
+  pointer-events: none;
+}
+.fl-item-marker {
+  flex-shrink: 0;
+  width: 0.45em;
+  height: 0.45em;
+  margin-top: 0.55em;
+  border-radius: 50%;
+  background: #0c4c52;
+}
+.fl-item-content {
+  flex: 1;
+}
+.fl-item-title {
+  font-size: 0.82em;
+  font-weight: 600;
+  color: #1a5c38;
+  margin: 0 0 0.15em;
+}
+.fl-item-desc {
+  font-size: 0.72em;
+  color: #4a5a4e;
+  line-height: 1.5;
+  margin: 0;
+}
+.fl-item-tag {
+  flex-shrink: 0;
+  font-size: 0.6em;
+  font-weight: 600;
+  padding: 0.2em 0.6em;
+  border-radius: 1em;
+  background: #f0f4f1;
+  color: #5a6b5e;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  align-self: center;
+}
+.fl-count {
+  font-size: 0.65em;
+  color: #7a8a7e;
+  margin-top: 0.5em;
+  font-style: italic;
+}
+</style>
+
+<div class="fl-container">
+  <div class="fl-filters">
+    <button class="fl-btn fl-active" data-fl-filter="all">All</button>
+    <button class="fl-btn" data-fl-filter="{{CAT_1}}">{{CAT_1}}</button>
+    <button class="fl-btn" data-fl-filter="{{CAT_2}}">{{CAT_2}}</button>
+    <button class="fl-btn" data-fl-filter="{{CAT_3}}">{{CAT_3}}</button>
+    <button class="fl-btn" data-fl-filter="{{CAT_4}}">{{CAT_4}}</button>
+  </div>
+  <div class="fl-list">
+    <div class="fl-item" data-fl-cat="{{CAT_1}}">
+      <span class="fl-item-marker"></span>
+      <div class="fl-item-content">
+        <div class="fl-item-title">{{ITEM_1_TITLE}}</div>
+        <p class="fl-item-desc">{{ITEM_1_DESC}}</p>
+      </div>
+      <span class="fl-item-tag">{{CAT_1}}</span>
+    </div>
+    <div class="fl-item" data-fl-cat="{{CAT_2}}">
+      <span class="fl-item-marker"></span>
+      <div class="fl-item-content">
+        <div class="fl-item-title">{{ITEM_2_TITLE}}</div>
+        <p class="fl-item-desc">{{ITEM_2_DESC}}</p>
+      </div>
+      <span class="fl-item-tag">{{CAT_2}}</span>
+    </div>
+    <div class="fl-item" data-fl-cat="{{CAT_3}}">
+      <span class="fl-item-marker"></span>
+      <div class="fl-item-content">
+        <div class="fl-item-title">{{ITEM_3_TITLE}}</div>
+        <p class="fl-item-desc">{{ITEM_3_DESC}}</p>
+      </div>
+      <span class="fl-item-tag">{{CAT_3}}</span>
+    </div>
+    <div class="fl-item" data-fl-cat="{{CAT_1}}">
+      <span class="fl-item-marker"></span>
+      <div class="fl-item-content">
+        <div class="fl-item-title">{{ITEM_4_TITLE}}</div>
+        <p class="fl-item-desc">{{ITEM_4_DESC}}</p>
+      </div>
+      <span class="fl-item-tag">{{CAT_1}}</span>
+    </div>
+    <div class="fl-item" data-fl-cat="{{CAT_4}}">
+      <span class="fl-item-marker"></span>
+      <div class="fl-item-content">
+        <div class="fl-item-title">{{ITEM_5_TITLE}}</div>
+        <p class="fl-item-desc">{{ITEM_5_DESC}}</p>
+      </div>
+      <span class="fl-item-tag">{{CAT_4}}</span>
+    </div>
+    <div class="fl-item" data-fl-cat="{{CAT_2}}">
+      <span class="fl-item-marker"></span>
+      <div class="fl-item-content">
+        <div class="fl-item-title">{{ITEM_6_TITLE}}</div>
+        <p class="fl-item-desc">{{ITEM_6_DESC}}</p>
+      </div>
+      <span class="fl-item-tag">{{CAT_2}}</span>
+    </div>
+  </div>
+  <div class="fl-count"></div>
+</div>
+
+<script>
+(function () {
+  var script = document.currentScript;
+  var slide = script.closest('section') || script.parentElement;
+  var container = slide.querySelector('.fl-container');
+  if (!container) return;
+
+  var filterBar = container.querySelector('.fl-filters');
+  var buttons = container.querySelectorAll('.fl-btn');
+  var items = container.querySelectorAll('.fl-item');
+  var countEl = container.querySelector('.fl-count');
+
+  function updateCount(visible, total) {
+    if (countEl) {
+      countEl.textContent = 'Showing ' + visible + ' of ' + total + ' items';
+    }
+  }
+
+  function applyFilter(category) {
+    var visibleCount = 0;
+    items.forEach(function (item) {
+      var cat = item.getAttribute('data-fl-cat');
+      if (category === 'all' || cat === category) {
+        item.classList.remove('fl-hidden');
+        item.style.maxHeight = item.scrollHeight + 20 + 'px';
+        visibleCount++;
+      } else {
+        item.classList.add('fl-hidden');
+        item.style.maxHeight = '0';
+      }
+    });
+    updateCount(visibleCount, items.length);
+
+    buttons.forEach(function (btn) {
+      btn.classList.toggle('fl-active', btn.getAttribute('data-fl-filter') === category);
+    });
+  }
+
+  filterBar.addEventListener('click', function (e) {
+    var btn = e.target.closest('.fl-btn');
+    if (!btn) return;
+    var filter = btn.getAttribute('data-fl-filter');
+    applyFilter(filter);
+  });
+
+  // Initialize count
+  updateCount(items.length, items.length);
+})();
+</script>

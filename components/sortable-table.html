@@ -1,0 +1,167 @@
+<!--
+  Component: Sortable Table
+  Category: JS-interactive (HTML output only)
+  Usage: Copy <style scoped>, HTML, and <script> block into your Marp slide
+  Parameters: Replace {{COL1}}, {{COL2}}, {{COL3}}, {{COL4}} with column headers;
+              Replace {{R1C1}}..{{R5C4}} with row cell values;
+              Add data-type="number" to <th> for numeric sorting
+  PDF Fallback: Static table with neutral header styling, no sort arrows
+-->
+
+<!-- ===== Variant 1: Parameterized Sortable Table ===== -->
+<style scoped>
+.st-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin: 1em 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.st-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0.5em;
+  overflow: hidden;
+  box-shadow: 0 0.125em 0.5em rgba(0,0,0,0.08);
+  font-size: 0.85em;
+}
+.st-table thead {
+  background: #1a5c38;
+}
+.st-table th {
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75em 1em;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+  letter-spacing: 0.02em;
+}
+.st-table th:hover {
+  background: #17512f;
+}
+.st-table th .st-arrow {
+  display: inline-block;
+  margin-left: 0.4em;
+  font-size: 0.7em;
+  opacity: 0.4;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  vertical-align: middle;
+}
+.st-table th.st-active .st-arrow {
+  opacity: 1;
+}
+.st-table td {
+  padding: 0.65em 1em;
+  border-bottom: 1px solid #e8ece9;
+  color: #2d3a32;
+  transition: background 0.15s ease;
+}
+.st-table tbody tr {
+  background: #fff;
+  transition: background 0.15s ease;
+}
+.st-table tbody tr:nth-child(even) {
+  background: #f5f8f6;
+}
+.st-table tbody tr:hover {
+  background: #e6f0ea;
+}
+.st-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.st-hint {
+  font-size: 0.65em;
+  color: #7a8a7e;
+  margin-top: 0.4em;
+  text-align: right;
+  font-style: italic;
+}
+</style>
+
+<div class="st-table-wrap">
+  <table class="st-table" id="st-sortable">
+    <thead>
+      <tr>
+        <th data-col="0">{{COL1}} <span class="st-arrow">&#9650;</span></th>
+        <th data-col="1">{{COL2}} <span class="st-arrow">&#9650;</span></th>
+        <th data-col="2" data-type="number">{{COL3}} <span class="st-arrow">&#9650;</span></th>
+        <th data-col="3" data-type="number">{{COL4}} <span class="st-arrow">&#9650;</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>{{R1C1}}</td><td>{{R1C2}}</td><td>{{R1C3}}</td><td>{{R1C4}}</td></tr>
+      <tr><td>{{R2C1}}</td><td>{{R2C2}}</td><td>{{R2C3}}</td><td>{{R2C4}}</td></tr>
+      <tr><td>{{R3C1}}</td><td>{{R3C2}}</td><td>{{R3C3}}</td><td>{{R3C4}}</td></tr>
+      <tr><td>{{R4C1}}</td><td>{{R4C2}}</td><td>{{R4C3}}</td><td>{{R4C4}}</td></tr>
+      <tr><td>{{R5C1}}</td><td>{{R5C2}}</td><td>{{R5C3}}</td><td>{{R5C4}}</td></tr>
+    </tbody>
+  </table>
+  <div class="st-hint">Click any column header to sort</div>
+</div>
+
+<script>
+(function () {
+  var script = document.currentScript;
+  var slide = script.closest('section') || script.parentElement;
+  var table = slide.querySelector('.st-table');
+  if (!table) return;
+
+  var thead = table.querySelector('thead');
+  var tbody = table.querySelector('tbody');
+  var headers = thead.querySelectorAll('th');
+  var sortState = {}; // col index -> 'asc' | 'desc'
+
+  function parseValue(text, isNumeric) {
+    text = (text || '').trim();
+    if (isNumeric) {
+      var num = parseFloat(text.replace(/[^0-9.\-]/g, ''));
+      return isNaN(num) ? 0 : num;
+    }
+    return text.toLowerCase();
+  }
+
+  function sortByColumn(colIndex, isNumeric) {
+    var dir = sortState[colIndex] === 'asc' ? 'desc' : 'asc';
+    sortState = {};
+    sortState[colIndex] = dir;
+
+    // Update header visuals
+    headers.forEach(function (th, i) {
+      var arrow = th.querySelector('.st-arrow');
+      if (i === colIndex) {
+        th.classList.add('st-active');
+        arrow.innerHTML = dir === 'asc' ? '&#9650;' : '&#9660;';
+      } else {
+        th.classList.remove('st-active');
+        arrow.innerHTML = '&#9650;';
+      }
+    });
+
+    // Sort rows
+    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+    rows.sort(function (a, b) {
+      var aVal = parseValue(a.children[colIndex].textContent, isNumeric);
+      var bVal = parseValue(b.children[colIndex].textContent, isNumeric);
+      if (aVal < bVal) return dir === 'asc' ? -1 : 1;
+      if (aVal > bVal) return dir === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    rows.forEach(function (row) {
+      tbody.appendChild(row);
+    });
+  }
+
+  thead.addEventListener('click', function (e) {
+    var th = e.target.closest('th');
+    if (!th) return;
+    var colIndex = parseInt(th.getAttribute('data-col'), 10);
+    var isNumeric = th.getAttribute('data-type') === 'number';
+    sortByColumn(colIndex, isNumeric);
+  });
+})();
+</script>

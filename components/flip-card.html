@@ -1,0 +1,163 @@
+<!--
+  Component: Flip Card
+  Category: JS-interactive (HTML output only)
+  Usage: Copy <style scoped>, HTML, and <script> block into your Marp slide
+  Parameters: Replace {{FRONT_TITLE}} with the front face heading;
+              Replace {{FRONT_CONTENT}} with front face body text;
+              Replace {{BACK_TITLE}} with the back face heading;
+              Replace {{BACK_CONTENT}} with back face body text;
+              Replace {{FRONT_ICON}} with an emoji or short symbol for the front
+  PDF Fallback: Front face visible with all content; back content hidden
+-->
+
+<!-- ===== Variant 1: Parameterized 3D Flip Card ===== -->
+<style scoped>
+.fc-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1em 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.fc-card {
+  width: 20em;
+  height: 13em;
+  perspective: 60em;
+  cursor: pointer;
+  user-select: none;
+}
+.fc-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.fc-card.fc-flipped .fc-inner {
+  transform: rotateY(180deg);
+}
+.fc-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 0.6em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1.5em;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.fc-front {
+  background: linear-gradient(135deg, #1a5c38 0%, #0c4c52 100%);
+  color: #fff;
+  box-shadow: 0 0.25em 1em rgba(26,92,56,0.3);
+}
+.fc-front-icon {
+  font-size: 2.2em;
+  margin-bottom: 0.3em;
+  line-height: 1;
+  filter: drop-shadow(0 0.05em 0.1em rgba(0,0,0,0.2));
+}
+.fc-front-title {
+  font-size: 1.1em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.3em;
+}
+.fc-front-content {
+  font-size: 0.75em;
+  opacity: 0.85;
+  line-height: 1.5;
+  max-width: 16em;
+}
+.fc-front-hint {
+  position: absolute;
+  bottom: 0.6em;
+  right: 0.8em;
+  font-size: 0.6em;
+  opacity: 0.5;
+  font-style: italic;
+}
+.fc-back {
+  background: #fff;
+  color: #2d3a32;
+  transform: rotateY(180deg);
+  box-shadow: 0 0.25em 1em rgba(0,0,0,0.12);
+  border: 2px solid #e0e6e2;
+}
+.fc-back-title {
+  font-size: 1em;
+  font-weight: 700;
+  color: #1a5c38;
+  margin-bottom: 0.5em;
+  letter-spacing: 0.015em;
+}
+.fc-back-content {
+  font-size: 0.78em;
+  line-height: 1.65;
+  color: #3a4d3f;
+  max-width: 16em;
+}
+.fc-back-divider {
+  width: 2.5em;
+  height: 0.15em;
+  background: #1a5c38;
+  border-radius: 1em;
+  margin-bottom: 0.6em;
+  opacity: 0.5;
+}
+.fc-back-hint {
+  position: absolute;
+  bottom: 0.6em;
+  right: 0.8em;
+  font-size: 0.6em;
+  color: #8a9a8e;
+  font-style: italic;
+}
+/* Subtle hover effect */
+.fc-card:hover .fc-inner {
+  filter: brightness(1.02);
+}
+</style>
+
+<div class="fc-wrapper">
+  <div class="fc-card">
+    <div class="fc-inner">
+      <div class="fc-face fc-front">
+        <div class="fc-front-icon">{{FRONT_ICON}}</div>
+        <div class="fc-front-title">{{FRONT_TITLE}}</div>
+        <div class="fc-front-content">{{FRONT_CONTENT}}</div>
+        <span class="fc-front-hint">Click to reveal</span>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-back-title">{{BACK_TITLE}}</div>
+        <div class="fc-back-divider"></div>
+        <div class="fc-back-content">{{BACK_CONTENT}}</div>
+        <span class="fc-back-hint">Click to flip back</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var script = document.currentScript;
+  var slide = script.closest('section') || script.parentElement;
+  var cards = slide.querySelectorAll('.fc-card');
+  if (!cards.length) return;
+
+  cards.forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      e.stopPropagation();
+      card.classList.toggle('fc-flipped');
+    });
+  });
+})();
+</script>

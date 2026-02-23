@@ -1,0 +1,332 @@
+<!--
+  Component: Timeline
+  Category: CSS-only
+  Usage: Copy <style scoped> and HTML block into your Marp slide
+  Parameters: Replace {{DATE}}, {{TITLE}}, {{DESC}} etc with actual content
+  PDF Fallback: Timelines render fully visible with all milestones shown
+-->
+
+
+<!-- ===== Variant 1: Horizontal Timeline ===== -->
+<!--
+  Dots connected by a horizontal line with labels below and dates above.
+  Best suited for 3-5 milestones. Each milestone can have a highlight state.
+  The active/completed milestones use the primary color; future ones are muted.
+-->
+
+<style scoped>
+.marp-tl-h {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  margin: 2em 1.5em 1em 1.5em;
+  padding-top: 2em;
+}
+
+/* Connecting line */
+.marp-tl-h::before {
+  content: "";
+  position: absolute;
+  top: calc(2em + 0.55em);
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #c8c8c8;
+  z-index: 0;
+}
+
+.marp-tl-h-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  max-width: 10em;
+}
+
+.marp-tl-h-date {
+  font-size: 0.7em;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5em;
+  white-space: nowrap;
+}
+
+.marp-tl-h-dot {
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 50%;
+  background: #c8c8c8;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 2px #c8c8c8;
+  margin-bottom: 0.6em;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.marp-tl-h-item.marp-tl-done .marp-tl-h-dot {
+  background: #1a5c38;
+  box-shadow: 0 0 0 2px #1a5c38;
+}
+
+.marp-tl-h-item.marp-tl-active .marp-tl-h-dot {
+  background: #0c4c52;
+  box-shadow: 0 0 0 2px #0c4c52, 0 0 0 5px rgba(12, 76, 82, 0.2);
+}
+
+.marp-tl-h-item.marp-tl-done .marp-tl-h-date,
+.marp-tl-h-item.marp-tl-active .marp-tl-h-date {
+  color: #1a5c38;
+}
+
+.marp-tl-h-title {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin-bottom: 0.2em;
+}
+
+.marp-tl-h-desc {
+  font-size: 0.65em;
+  color: #777;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 9em;
+}
+</style>
+
+<div class="marp-tl-h">
+  <div class="marp-tl-h-item marp-tl-done">
+    <span class="marp-tl-h-date">{{DATE_1}}</span>
+    <div class="marp-tl-h-dot"></div>
+    <div class="marp-tl-h-title">{{TITLE_1}}</div>
+    <div class="marp-tl-h-desc">{{DESC_1}}</div>
+  </div>
+  <div class="marp-tl-h-item marp-tl-done">
+    <span class="marp-tl-h-date">{{DATE_2}}</span>
+    <div class="marp-tl-h-dot"></div>
+    <div class="marp-tl-h-title">{{TITLE_2}}</div>
+    <div class="marp-tl-h-desc">{{DESC_2}}</div>
+  </div>
+  <div class="marp-tl-h-item marp-tl-active">
+    <span class="marp-tl-h-date">{{DATE_3}}</span>
+    <div class="marp-tl-h-dot"></div>
+    <div class="marp-tl-h-title">{{TITLE_3}}</div>
+    <div class="marp-tl-h-desc">{{DESC_3}}</div>
+  </div>
+  <div class="marp-tl-h-item">
+    <span class="marp-tl-h-date">{{DATE_4}}</span>
+    <div class="marp-tl-h-dot"></div>
+    <div class="marp-tl-h-title">{{TITLE_4}}</div>
+    <div class="marp-tl-h-desc">{{DESC_4}}</div>
+  </div>
+  <div class="marp-tl-h-item">
+    <span class="marp-tl-h-date">{{DATE_5}}</span>
+    <div class="marp-tl-h-dot"></div>
+    <div class="marp-tl-h-title">{{TITLE_5}}</div>
+    <div class="marp-tl-h-desc">{{DESC_5}}</div>
+  </div>
+</div>
+
+<!-- Example usage:
+<div class="marp-tl-h">
+  <div class="marp-tl-h-item marp-tl-done">
+    <span class="marp-tl-h-date">Jan 2025</span>
+    <div class="marp-tl-h-dot"></div>
+    <div class="marp-tl-h-title">Discovery</div>
+    <div class="marp-tl-h-desc">Stakeholder interviews and current-state analysis</div>
+  </div>
+  <div class="marp-tl-h-item marp-tl-done">
+    <span class="marp-tl-h-date">Mar 2025</span>
+    <div class="marp-tl-h-dot"></div>
+    <div class="marp-tl-h-title">Design</div>
+    <div class="marp-tl-h-desc">Solution architecture and roadmap definition</div>
+  </div>
+  <div class="marp-tl-h-item marp-tl-active">
+    <span class="marp-tl-h-date">Jun 2025</span>
+    <div class="marp-tl-h-dot"></div>
+    <div class="marp-tl-h-title">Build</div>
+    <div class="marp-tl-h-desc">Core platform development and integration</div>
+  </div>
+  <div class="marp-tl-h-item">
+    <span class="marp-tl-h-date">Sep 2025</span>
+    <div class="marp-tl-h-dot"></div>
+    <div class="marp-tl-h-title">Pilot</div>
+    <div class="marp-tl-h-desc">Controlled rollout with select business units</div>
+  </div>
+  <div class="marp-tl-h-item">
+    <span class="marp-tl-h-date">Dec 2025</span>
+    <div class="marp-tl-h-dot"></div>
+    <div class="marp-tl-h-title">Scale</div>
+    <div class="marp-tl-h-desc">Enterprise-wide deployment and optimization</div>
+  </div>
+</div>
+-->
+
+
+<!-- ===== Variant 2: Vertical Timeline ===== -->
+<!--
+  Left-aligned dots with a vertical connecting line and content cards
+  on the right. Good for 4-6 events. Supports done, active, and future states.
+-->
+
+<style scoped>
+.marp-tl-v {
+  position: relative;
+  margin: 1em 0 1em 2em;
+  padding-left: 2em;
+}
+
+/* Vertical connecting line */
+.marp-tl-v::before {
+  content: "";
+  position: absolute;
+  left: 0.45em;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #c8c8c8;
+}
+
+.marp-tl-v-item {
+  position: relative;
+  margin-bottom: 1.2em;
+  padding-left: 0.5em;
+}
+
+.marp-tl-v-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Dot */
+.marp-tl-v-item::before {
+  content: "";
+  position: absolute;
+  left: -2.05em;
+  top: 0.25em;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background: #c8c8c8;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px #c8c8c8;
+  z-index: 1;
+}
+
+.marp-tl-v-item.marp-tl-done::before {
+  background: #1a5c38;
+  box-shadow: 0 0 0 2px #1a5c38;
+}
+
+.marp-tl-v-item.marp-tl-active::before {
+  background: #0c4c52;
+  box-shadow: 0 0 0 2px #0c4c52, 0 0 0 5px rgba(12, 76, 82, 0.2);
+}
+
+.marp-tl-v-date {
+  font-size: 0.7em;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.marp-tl-v-item.marp-tl-done .marp-tl-v-date,
+.marp-tl-v-item.marp-tl-active .marp-tl-v-date {
+  color: #1a5c38;
+}
+
+.marp-tl-v-title {
+  font-size: 0.9em;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0.1em 0 0.15em 0;
+}
+
+.marp-tl-v-desc {
+  font-size: 0.75em;
+  color: #666;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.marp-tl-v-card {
+  background: #f5f8f6;
+  border-radius: 0.35em;
+  padding: 0.6em 0.8em;
+  margin-top: 0.2em;
+}
+
+.marp-tl-v-item.marp-tl-active .marp-tl-v-card {
+  background: #eaf2ee;
+  border-left: 3px solid #0c4c52;
+}
+</style>
+
+<div class="marp-tl-v">
+  <div class="marp-tl-v-item marp-tl-done">
+    <span class="marp-tl-v-date">{{DATE_1}}</span>
+    <div class="marp-tl-v-card">
+      <div class="marp-tl-v-title">{{TITLE_1}}</div>
+      <p class="marp-tl-v-desc">{{DESC_1}}</p>
+    </div>
+  </div>
+  <div class="marp-tl-v-item marp-tl-done">
+    <span class="marp-tl-v-date">{{DATE_2}}</span>
+    <div class="marp-tl-v-card">
+      <div class="marp-tl-v-title">{{TITLE_2}}</div>
+      <p class="marp-tl-v-desc">{{DESC_2}}</p>
+    </div>
+  </div>
+  <div class="marp-tl-v-item marp-tl-active">
+    <span class="marp-tl-v-date">{{DATE_3}}</span>
+    <div class="marp-tl-v-card">
+      <div class="marp-tl-v-title">{{TITLE_3}}</div>
+      <p class="marp-tl-v-desc">{{DESC_3}}</p>
+    </div>
+  </div>
+  <div class="marp-tl-v-item">
+    <span class="marp-tl-v-date">{{DATE_4}}</span>
+    <div class="marp-tl-v-card">
+      <div class="marp-tl-v-title">{{TITLE_4}}</div>
+      <p class="marp-tl-v-desc">{{DESC_4}}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Example usage:
+<div class="marp-tl-v">
+  <div class="marp-tl-v-item marp-tl-done">
+    <span class="marp-tl-v-date">Q1 2025</span>
+    <div class="marp-tl-v-card">
+      <div class="marp-tl-v-title">Requirements Gathering</div>
+      <p class="marp-tl-v-desc">Completed 24 stakeholder interviews across 6 business units. Documented 142 requirements with priority scoring.</p>
+    </div>
+  </div>
+  <div class="marp-tl-v-item marp-tl-done">
+    <span class="marp-tl-v-date">Q2 2025</span>
+    <div class="marp-tl-v-card">
+      <div class="marp-tl-v-title">Architecture Design</div>
+      <p class="marp-tl-v-desc">Finalized microservices architecture. Selected AWS as primary cloud provider with multi-region deployment strategy.</p>
+    </div>
+  </div>
+  <div class="marp-tl-v-item marp-tl-active">
+    <span class="marp-tl-v-date">Q3 2025</span>
+    <div class="marp-tl-v-card">
+      <div class="marp-tl-v-title">Development Sprint</div>
+      <p class="marp-tl-v-desc">Core API development underway. 60% of user stories completed. Integration testing with legacy systems in progress.</p>
+    </div>
+  </div>
+  <div class="marp-tl-v-item">
+    <span class="marp-tl-v-date">Q4 2025</span>
+    <div class="marp-tl-v-card">
+      <div class="marp-tl-v-title">Launch & Optimization</div>
+      <p class="marp-tl-v-desc">Phased rollout to production. Performance monitoring, user training, and continuous improvement cycle.</p>
+    </div>
+  </div>
+</div>
+-->

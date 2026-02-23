@@ -1,0 +1,184 @@
+<!--
+  Component: Tooltips
+  Category: CSS-only
+  Usage: Copy <style scoped> and HTML block into your Marp slide
+  Parameters: Replace {{TEXT}}, {{TOOLTIP}} etc with actual content
+  PDF Fallback: Tooltip text is hidden; only the trigger element is visible.
+                Consider adding footnotes for critical tooltip content in print.
+-->
+
+
+<!-- ===== Variant 1: Hover Tooltip Above ===== -->
+<!--
+  An inline element that reveals a tooltip above on hover. The tooltip
+  has a small arrow pointing down. Useful for definitions, acronyms,
+  or supplementary context on key terms in your slides.
+-->
+
+<style scoped>
+.marp-tt-above {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1.5px dashed #1a5c38;
+  color: #1a5c38;
+  font-weight: 600;
+  cursor: help;
+}
+
+.marp-tt-above .marp-tt-content {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: calc(100% + 0.6em);
+  left: 50%;
+  transform: translateX(-50%) translateY(0.3em);
+  background: #1a1a1a;
+  color: #ffffff;
+  font-size: 0.75em;
+  font-weight: 400;
+  line-height: 1.4;
+  padding: 0.5em 0.75em;
+  border-radius: 0.35em;
+  white-space: nowrap;
+  max-width: 18em;
+  white-space: normal;
+  text-align: center;
+  z-index: 100;
+  box-shadow: 0 0.2em 0.8em rgba(0, 0, 0, 0.2);
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+/* Arrow pointing down */
+.marp-tt-above .marp-tt-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0.4em solid transparent;
+  border-top-color: #1a1a1a;
+}
+
+.marp-tt-above:hover .marp-tt-content {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+
+<p>
+  Our <span class="marp-tt-above">{{TEXT_1}}<span class="marp-tt-content">{{TOOLTIP_1}}</span></span> strategy
+  focuses on delivering <span class="marp-tt-above">{{TEXT_2}}<span class="marp-tt-content">{{TOOLTIP_2}}</span></span>
+  across all business units.
+</p>
+
+<!-- Example usage:
+<p>
+  Our <span class="marp-tt-above">TAM<span class="marp-tt-content">Total Addressable Market: the total revenue opportunity available for a product or service</span></span>
+  analysis reveals a <span class="marp-tt-above">$4.2B<span class="marp-tt-content">Based on 2024 market sizing study by McKinsey Global Institute</span></span>
+  opportunity in the <span class="marp-tt-above">APAC region<span class="marp-tt-content">Asia-Pacific: includes Japan, South Korea, Australia, Singapore, and emerging SEA markets</span></span>.
+</p>
+-->
+
+<!-- Standalone tooltip examples -->
+<p>
+  <span class="marp-tt-above">
+    {{TRIGGER_TEXT}}
+    <span class="marp-tt-content">{{TOOLTIP_CONTENT}}</span>
+  </span>
+</p>
+
+
+<!-- ===== Variant 2: Hover Tooltip Below ===== -->
+<!--
+  An inline element that reveals a tooltip below on hover. The tooltip
+  has a small arrow pointing up. Useful when content above the trigger
+  would be obscured, such as in headers or top-aligned text.
+-->
+
+<style scoped>
+.marp-tt-below {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1.5px dashed #0c4c52;
+  color: #0c4c52;
+  font-weight: 600;
+  cursor: help;
+}
+
+.marp-tt-below .marp-tt-content-b {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: calc(100% + 0.6em);
+  left: 50%;
+  transform: translateX(-50%) translateY(-0.3em);
+  background: #1a1a1a;
+  color: #ffffff;
+  font-size: 0.75em;
+  font-weight: 400;
+  line-height: 1.4;
+  padding: 0.5em 0.75em;
+  border-radius: 0.35em;
+  max-width: 18em;
+  white-space: normal;
+  text-align: center;
+  z-index: 100;
+  box-shadow: 0 0.2em 0.8em rgba(0, 0, 0, 0.2);
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+/* Arrow pointing up */
+.marp-tt-below .marp-tt-content-b::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0.4em solid transparent;
+  border-bottom-color: #1a1a1a;
+}
+
+.marp-tt-below:hover .marp-tt-content-b {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Accent variations */
+.marp-tt-below.marp-tt-primary {
+  border-bottom-color: #1a5c38;
+  color: #1a5c38;
+}
+
+.marp-tt-below.marp-tt-emphasis {
+  border-bottom-color: #8b3a2a;
+  color: #8b3a2a;
+}
+</style>
+
+<p>
+  Review the <span class="marp-tt-below">{{TEXT_1}}<span class="marp-tt-content-b">{{TOOLTIP_1}}</span></span>
+  and <span class="marp-tt-below marp-tt-emphasis">{{TEXT_2}}<span class="marp-tt-content-b">{{TOOLTIP_2}}</span></span>
+  before proceeding.
+</p>
+
+<!-- Example usage:
+<p>
+  The proposed <span class="marp-tt-below">CAGR<span class="marp-tt-content-b">Compound Annual Growth Rate: the mean annual growth rate over a specified time period longer than one year</span></span>
+  of 12.4% exceeds the industry benchmark of
+  <span class="marp-tt-below marp-tt-emphasis">8.7%<span class="marp-tt-content-b">Industry benchmark sourced from Gartner IT Spending Forecast, Q3 2024</span></span>
+  by a significant margin, indicating strong competitive positioning.
+</p>
+-->
+
+<!-- Combined demo: Both tooltip directions in a single paragraph -->
+<!--
+<p>
+  Our <span class="marp-tt-above">ROI<span class="marp-tt-content">Return on Investment: net profit divided by cost of investment, expressed as a percentage</span></span>
+  projections indicate a payback period of
+  <span class="marp-tt-below">18 months<span class="marp-tt-content-b">Assuming current run-rate and 95% confidence interval from Monte Carlo simulation</span></span>.
+</p>
+-->

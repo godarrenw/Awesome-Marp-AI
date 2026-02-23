@@ -1,0 +1,497 @@
+<!--
+  Component: CSS-Only Charts
+  Category: CSS-only
+  Usage: Copy <style scoped> and HTML block into your Marp slide
+  Parameters: Replace {{LABEL}}, {{VALUE}}, {{PERCENT}} etc with actual content
+  PDF Fallback: Charts render at their final state without animation
+-->
+
+
+<!-- ===== Variant 1: Vertical Bar Chart ===== -->
+<!--
+  A CSS-only vertical bar chart with labels at the bottom and values at the
+  top of each bar. Set --h custom property as a percentage for bar height.
+  The chart auto-scales to the available slide width.
+-->
+
+<style scoped>
+@keyframes marp-ch-bar-rise {
+  from { height: 0%; }
+  to   { height: var(--h, 0%); }
+}
+
+.marp-ch-vbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1em;
+  height: 14em;
+  margin: 1.5em 1em 0 1em;
+  padding: 0 1em;
+  border-bottom: 2px solid #c8c8c8;
+  border-left: 2px solid #c8c8c8;
+  position: relative;
+}
+
+/* Y-axis grid lines */
+.marp-ch-vbar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent calc(25% - 1px),
+    #e8e8e8 calc(25% - 1px),
+    #e8e8e8 25%
+  );
+  pointer-events: none;
+}
+
+.marp-ch-vbar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 5em;
+  position: relative;
+  z-index: 1;
+}
+
+.marp-ch-vbar-value {
+  font-size: 0.7em;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.3em;
+  white-space: nowrap;
+}
+
+.marp-ch-vbar-bar {
+  width: 70%;
+  height: var(--h, 0%);
+  min-height: 0.2em;
+  background: var(--bar-color, #1a5c38);
+  border-radius: 0.25em 0.25em 0 0;
+  animation: marp-ch-bar-rise 1s ease-out forwards;
+  position: relative;
+}
+
+.marp-ch-vbar-label {
+  font-size: 0.7em;
+  font-weight: 600;
+  color: #555;
+  text-align: center;
+  margin-top: 0.5em;
+  line-height: 1.2;
+  position: absolute;
+  bottom: -2.5em;
+  white-space: nowrap;
+}
+
+/* Color presets */
+.marp-ch-vbar-bar.marp-ch-c1 { --bar-color: #1a5c38; }
+.marp-ch-vbar-bar.marp-ch-c2 { --bar-color: #0c4c52; }
+.marp-ch-vbar-bar.marp-ch-c3 { --bar-color: #8b3a2a; }
+.marp-ch-vbar-bar.marp-ch-c4 { --bar-color: #5b6abf; }
+.marp-ch-vbar-bar.marp-ch-c5 { --bar-color: #b8860b; }
+.marp-ch-vbar-bar.marp-ch-c6 { --bar-color: #7a5c8d; }
+
+/* Wrapper to hold chart + labels without overflow */
+.marp-ch-vbar-wrap {
+  padding-bottom: 2.5em;
+}
+</style>
+
+<div class="marp-ch-vbar-wrap">
+  <div class="marp-ch-vbar">
+    <div class="marp-ch-vbar-col">
+      <span class="marp-ch-vbar-value">{{VALUE_1}}</span>
+      <div class="marp-ch-vbar-bar marp-ch-c1" style="--h: {{PERCENT_1}}%;">
+        <span class="marp-ch-vbar-label">{{LABEL_1}}</span>
+      </div>
+    </div>
+    <div class="marp-ch-vbar-col">
+      <span class="marp-ch-vbar-value">{{VALUE_2}}</span>
+      <div class="marp-ch-vbar-bar marp-ch-c2" style="--h: {{PERCENT_2}}%;">
+        <span class="marp-ch-vbar-label">{{LABEL_2}}</span>
+      </div>
+    </div>
+    <div class="marp-ch-vbar-col">
+      <span class="marp-ch-vbar-value">{{VALUE_3}}</span>
+      <div class="marp-ch-vbar-bar marp-ch-c3" style="--h: {{PERCENT_3}}%;">
+        <span class="marp-ch-vbar-label">{{LABEL_3}}</span>
+      </div>
+    </div>
+    <div class="marp-ch-vbar-col">
+      <span class="marp-ch-vbar-value">{{VALUE_4}}</span>
+      <div class="marp-ch-vbar-bar marp-ch-c4" style="--h: {{PERCENT_4}}%;">
+        <span class="marp-ch-vbar-label">{{LABEL_4}}</span>
+      </div>
+    </div>
+    <div class="marp-ch-vbar-col">
+      <span class="marp-ch-vbar-value">{{VALUE_5}}</span>
+      <div class="marp-ch-vbar-bar marp-ch-c5" style="--h: {{PERCENT_5}}%;">
+        <span class="marp-ch-vbar-label">{{LABEL_5}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Example usage:
+<div class="marp-ch-vbar-wrap">
+  <div class="marp-ch-vbar">
+    <div class="marp-ch-vbar-col">
+      <span class="marp-ch-vbar-value">$4.2M</span>
+      <div class="marp-ch-vbar-bar marp-ch-c1" style="--h: 84%;">
+        <span class="marp-ch-vbar-label">Q1</span>
+      </div>
+    </div>
+    <div class="marp-ch-vbar-col">
+      <span class="marp-ch-vbar-value">$3.8M</span>
+      <div class="marp-ch-vbar-bar marp-ch-c2" style="--h: 76%;">
+        <span class="marp-ch-vbar-label">Q2</span>
+      </div>
+    </div>
+    <div class="marp-ch-vbar-col">
+      <span class="marp-ch-vbar-value">$5.0M</span>
+      <div class="marp-ch-vbar-bar marp-ch-c1" style="--h: 100%;">
+        <span class="marp-ch-vbar-label">Q3</span>
+      </div>
+    </div>
+    <div class="marp-ch-vbar-col">
+      <span class="marp-ch-vbar-value">$4.6M</span>
+      <div class="marp-ch-vbar-bar marp-ch-c2" style="--h: 92%;">
+        <span class="marp-ch-vbar-label">Q4</span>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+
+<!-- ===== Variant 2: Horizontal Bar Chart ===== -->
+<!--
+  CSS-only horizontal bar chart with labels on the left, bars going
+  left to right, and values at the end of each bar. Set --w custom
+  property as a percentage for bar width.
+-->
+
+<style scoped>
+@keyframes marp-ch-hbar-grow {
+  from { width: 0%; }
+  to   { width: var(--w, 0%); }
+}
+
+.marp-ch-hbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  margin: 1em 0;
+}
+
+.marp-ch-hbar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+
+.marp-ch-hbar-label {
+  flex: 0 0 7em;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #333;
+  text-align: right;
+}
+
+.marp-ch-hbar-track {
+  flex: 1;
+  height: 1.5em;
+  background: #f0f2f1;
+  border-radius: 0.3em;
+  overflow: visible;
+  position: relative;
+}
+
+.marp-ch-hbar-bar {
+  height: 100%;
+  width: var(--w, 0%);
+  background: var(--bar-color, #1a5c38);
+  border-radius: 0.3em;
+  animation: marp-ch-hbar-grow 1s ease-out forwards;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.marp-ch-hbar-value {
+  font-size: 0.7em;
+  font-weight: 700;
+  color: #333;
+  position: absolute;
+  right: -0.5em;
+  transform: translateX(100%);
+  white-space: nowrap;
+}
+
+/* When the bar is wide enough, show value inside */
+.marp-ch-hbar-bar.marp-ch-val-inside .marp-ch-hbar-value {
+  position: relative;
+  right: auto;
+  transform: none;
+  color: #ffffff;
+  padding-right: 0.5em;
+}
+
+/* Color presets */
+.marp-ch-hbar-bar.marp-ch-c1 { --bar-color: #1a5c38; }
+.marp-ch-hbar-bar.marp-ch-c2 { --bar-color: #0c4c52; }
+.marp-ch-hbar-bar.marp-ch-c3 { --bar-color: #8b3a2a; }
+.marp-ch-hbar-bar.marp-ch-c4 { --bar-color: #5b6abf; }
+.marp-ch-hbar-bar.marp-ch-c5 { --bar-color: #b8860b; }
+</style>
+
+<div class="marp-ch-hbar">
+  <div class="marp-ch-hbar-row">
+    <span class="marp-ch-hbar-label">{{LABEL_1}}</span>
+    <div class="marp-ch-hbar-track">
+      <div class="marp-ch-hbar-bar marp-ch-c1" style="--w: {{PERCENT_1}}%;">
+        <span class="marp-ch-hbar-value">{{VALUE_1}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="marp-ch-hbar-row">
+    <span class="marp-ch-hbar-label">{{LABEL_2}}</span>
+    <div class="marp-ch-hbar-track">
+      <div class="marp-ch-hbar-bar marp-ch-c2" style="--w: {{PERCENT_2}}%;">
+        <span class="marp-ch-hbar-value">{{VALUE_2}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="marp-ch-hbar-row">
+    <span class="marp-ch-hbar-label">{{LABEL_3}}</span>
+    <div class="marp-ch-hbar-track">
+      <div class="marp-ch-hbar-bar marp-ch-c3" style="--w: {{PERCENT_3}}%;">
+        <span class="marp-ch-hbar-value">{{VALUE_3}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="marp-ch-hbar-row">
+    <span class="marp-ch-hbar-label">{{LABEL_4}}</span>
+    <div class="marp-ch-hbar-track">
+      <div class="marp-ch-hbar-bar marp-ch-c4" style="--w: {{PERCENT_4}}%;">
+        <span class="marp-ch-hbar-value">{{VALUE_4}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Example usage:
+<div class="marp-ch-hbar">
+  <div class="marp-ch-hbar-row">
+    <span class="marp-ch-hbar-label">Product A</span>
+    <div class="marp-ch-hbar-track">
+      <div class="marp-ch-hbar-bar marp-ch-c1 marp-ch-val-inside" style="--w: 92%;">
+        <span class="marp-ch-hbar-value">$9.2M</span>
+      </div>
+    </div>
+  </div>
+  <div class="marp-ch-hbar-row">
+    <span class="marp-ch-hbar-label">Product B</span>
+    <div class="marp-ch-hbar-track">
+      <div class="marp-ch-hbar-bar marp-ch-c2 marp-ch-val-inside" style="--w: 74%;">
+        <span class="marp-ch-hbar-value">$7.4M</span>
+      </div>
+    </div>
+  </div>
+  <div class="marp-ch-hbar-row">
+    <span class="marp-ch-hbar-label">Product C</span>
+    <div class="marp-ch-hbar-track">
+      <div class="marp-ch-hbar-bar marp-ch-c3" style="--w: 45%;">
+        <span class="marp-ch-hbar-value">$4.5M</span>
+      </div>
+    </div>
+  </div>
+  <div class="marp-ch-hbar-row">
+    <span class="marp-ch-hbar-label">Product D</span>
+    <div class="marp-ch-hbar-track">
+      <div class="marp-ch-hbar-bar marp-ch-c4" style="--w: 28%;">
+        <span class="marp-ch-hbar-value">$2.8M</span>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+
+<!-- ===== Variant 3: Simple Donut / Pie Chart ===== -->
+<!--
+  A donut chart using conic-gradient for 3-4 segments. Each segment's
+  size is defined by its angular span. Includes a legend below the chart.
+  Set the conic-gradient stops to match your data proportions.
+-->
+
+<style scoped>
+.marp-ch-donut-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1.5em auto;
+}
+
+.marp-ch-donut {
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--seg1-color, #1a5c38) 0deg var(--seg1-end, 130deg),
+    var(--seg2-color, #0c4c52) var(--seg1-end, 130deg) var(--seg2-end, 240deg),
+    var(--seg3-color, #8b3a2a) var(--seg2-end, 240deg) var(--seg3-end, 310deg),
+    var(--seg4-color, #b8860b) var(--seg3-end, 310deg) 360deg
+  );
+  position: relative;
+  box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.08);
+}
+
+/* Inner cutout for donut */
+.marp-ch-donut::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5.5em;
+  height: 5.5em;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* Center label */
+.marp-ch-donut-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+}
+
+.marp-ch-donut-total {
+  font-size: 1.3em;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.1;
+}
+
+.marp-ch-donut-subtitle {
+  font-size: 0.6em;
+  color: #888;
+  font-weight: 600;
+}
+
+/* Legend */
+.marp-ch-donut-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6em 1.5em;
+  margin-top: 1em;
+}
+
+.marp-ch-donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.75em;
+  color: #444;
+}
+
+.marp-ch-donut-swatch {
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 0.15em;
+  flex-shrink: 0;
+}
+</style>
+
+<div class="marp-ch-donut-wrap">
+  <div class="marp-ch-donut" style="
+    --seg1-color: #1a5c38; --seg1-end: {{SEG1_END_DEG}}deg;
+    --seg2-color: #0c4c52; --seg2-end: {{SEG2_END_DEG}}deg;
+    --seg3-color: #8b3a2a; --seg3-end: {{SEG3_END_DEG}}deg;
+    --seg4-color: #b8860b;
+  ">
+    <div class="marp-ch-donut-center">
+      <div class="marp-ch-donut-total">{{TOTAL}}</div>
+      <div class="marp-ch-donut-subtitle">{{SUBTITLE}}</div>
+    </div>
+  </div>
+  <div class="marp-ch-donut-legend">
+    <span class="marp-ch-donut-legend-item">
+      <span class="marp-ch-donut-swatch" style="background: #1a5c38;"></span>
+      {{LEGEND_1}} ({{PCT_1}}%)
+    </span>
+    <span class="marp-ch-donut-legend-item">
+      <span class="marp-ch-donut-swatch" style="background: #0c4c52;"></span>
+      {{LEGEND_2}} ({{PCT_2}}%)
+    </span>
+    <span class="marp-ch-donut-legend-item">
+      <span class="marp-ch-donut-swatch" style="background: #8b3a2a;"></span>
+      {{LEGEND_3}} ({{PCT_3}}%)
+    </span>
+    <span class="marp-ch-donut-legend-item">
+      <span class="marp-ch-donut-swatch" style="background: #b8860b;"></span>
+      {{LEGEND_4}} ({{PCT_4}}%)
+    </span>
+  </div>
+</div>
+
+<!-- How to calculate degrees for each segment:
+     degrees = (percentage / 100) * 360
+     seg1_end = seg1_degrees
+     seg2_end = seg1_end + seg2_degrees
+     seg3_end = seg2_end + seg3_degrees
+     seg4 fills the remainder to 360deg automatically
+
+     Example: 36%, 30%, 20%, 14%
+     seg1_end = 0.36 * 360 = 129.6 ≈ 130
+     seg2_end = 130 + (0.30 * 360) = 130 + 108 = 238
+     seg3_end = 238 + (0.20 * 360) = 238 + 72 = 310
+-->
+
+<!-- Example usage:
+<div class="marp-ch-donut-wrap">
+  <div class="marp-ch-donut" style="
+    --seg1-color: #1a5c38; --seg1-end: 130deg;
+    --seg2-color: #0c4c52; --seg2-end: 238deg;
+    --seg3-color: #8b3a2a; --seg3-end: 310deg;
+    --seg4-color: #b8860b;
+  ">
+    <div class="marp-ch-donut-center">
+      <div class="marp-ch-donut-total">$24.8M</div>
+      <div class="marp-ch-donut-subtitle">Total Revenue</div>
+    </div>
+  </div>
+  <div class="marp-ch-donut-legend">
+    <span class="marp-ch-donut-legend-item">
+      <span class="marp-ch-donut-swatch" style="background: #1a5c38;"></span>
+      North America (36%)
+    </span>
+    <span class="marp-ch-donut-legend-item">
+      <span class="marp-ch-donut-swatch" style="background: #0c4c52;"></span>
+      Europe (30%)
+    </span>
+    <span class="marp-ch-donut-legend-item">
+      <span class="marp-ch-donut-swatch" style="background: #8b3a2a;"></span>
+      Asia Pacific (20%)
+    </span>
+    <span class="marp-ch-donut-legend-item">
+      <span class="marp-ch-donut-swatch" style="background: #b8860b;"></span>
+      Rest of World (14%)
+    </span>
+  </div>
+</div>
+-->

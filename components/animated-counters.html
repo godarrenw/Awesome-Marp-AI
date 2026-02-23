@@ -1,0 +1,239 @@
+<!--
+  Component: Animated Counters
+  Category: CSS-only
+  Usage: Copy <style scoped> and HTML block into your Marp slide
+  Parameters: Replace {{TARGET}}, {{LABEL}}, {{PERCENT}} etc with actual content
+  PDF Fallback: Counters display at their final target value; rings show completed state
+-->
+
+
+<!-- ===== Variant 1: Number Counter ===== -->
+<!--
+  CSS counter animation that appears to count up from 0 to a target number.
+  Uses CSS @property (where supported) and a stepped animation to simulate
+  counting. The --target custom property sets the final number.
+
+  Note: CSS @property-based counter animations require Chromium-based browsers.
+  For maximum compatibility, the fallback displays the number directly.
+-->
+
+<style scoped>
+@property --marp-ac-num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@keyframes marp-ac-count {
+  from { --marp-ac-num: 0; }
+  to   { --marp-ac-num: var(--target, 0); }
+}
+
+.marp-ac-counter-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  margin: 1.5em 0;
+  flex-wrap: wrap;
+}
+
+.marp-ac-counter {
+  text-align: center;
+  min-width: 7em;
+}
+
+.marp-ac-number {
+  font-size: 2.8em;
+  font-weight: 800;
+  color: #1a5c38;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  --marp-ac-num: var(--target, 0);
+  animation: marp-ac-count 2s ease-out forwards;
+  counter-reset: marp-ac-val var(--marp-ac-num);
+}
+
+.marp-ac-number::after {
+  content: counter(marp-ac-val);
+}
+
+.marp-ac-number.marp-ac-has-prefix::before {
+  content: var(--prefix, "");
+}
+
+.marp-ac-number.marp-ac-has-suffix::after {
+  content: counter(marp-ac-val) var(--suffix, "");
+}
+
+.marp-ac-label {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.3em;
+}
+
+.marp-ac-sublabel {
+  font-size: 0.7em;
+  color: #999;
+  margin-top: 0.15em;
+}
+</style>
+
+<div class="marp-ac-counter-grid">
+  <div class="marp-ac-counter">
+    <div class="marp-ac-number marp-ac-has-suffix" style="--target: {{TARGET_1}}; --suffix: '{{SUFFIX_1}}';"></div>
+    <div class="marp-ac-label">{{LABEL_1}}</div>
+    <div class="marp-ac-sublabel">{{SUBLABEL_1}}</div>
+  </div>
+  <div class="marp-ac-counter">
+    <div class="marp-ac-number marp-ac-has-prefix marp-ac-has-suffix" style="--target: {{TARGET_2}}; --prefix: '{{PREFIX_2}}'; --suffix: '{{SUFFIX_2}}';"></div>
+    <div class="marp-ac-label">{{LABEL_2}}</div>
+    <div class="marp-ac-sublabel">{{SUBLABEL_2}}</div>
+  </div>
+  <div class="marp-ac-counter">
+    <div class="marp-ac-number" style="--target: {{TARGET_3}};"></div>
+    <div class="marp-ac-label">{{LABEL_3}}</div>
+    <div class="marp-ac-sublabel">{{SUBLABEL_3}}</div>
+  </div>
+</div>
+
+<!-- Example usage:
+<div class="marp-ac-counter-grid">
+  <div class="marp-ac-counter">
+    <div class="marp-ac-number marp-ac-has-suffix" style="--target: 94; --suffix: '%';"></div>
+    <div class="marp-ac-label">Client Retention</div>
+    <div class="marp-ac-sublabel">Year over year</div>
+  </div>
+  <div class="marp-ac-counter">
+    <div class="marp-ac-number marp-ac-has-prefix marp-ac-has-suffix" style="--target: 12; --prefix: '$'; --suffix: 'M';"></div>
+    <div class="marp-ac-label">Annual Revenue</div>
+    <div class="marp-ac-sublabel">FY 2025</div>
+  </div>
+  <div class="marp-ac-counter">
+    <div class="marp-ac-number" style="--target: 340;"></div>
+    <div class="marp-ac-label">Employees</div>
+    <div class="marp-ac-sublabel">Across 5 offices</div>
+  </div>
+</div>
+-->
+
+
+<!-- ===== Variant 2: Percentage Ring ===== -->
+<!--
+  Circular progress indicator using conic-gradient with the percentage
+  value displayed in the center. Set --percent to the target value (0-100).
+  Uses CSS animation to reveal the ring progressively.
+-->
+
+<style scoped>
+@property --marp-ac-ring-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes marp-ac-ring-fill {
+  from { --marp-ac-ring-angle: 0deg; }
+  to   { --marp-ac-ring-angle: calc(var(--percent, 0) * 3.6deg); }
+}
+
+.marp-ac-ring-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2.5em;
+  margin: 1.5em 0;
+  flex-wrap: wrap;
+}
+
+.marp-ac-ring-wrap {
+  text-align: center;
+}
+
+.marp-ac-ring {
+  position: relative;
+  width: 7em;
+  height: 7em;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.5em auto;
+  background: conic-gradient(
+    var(--ring-color, #1a5c38) 0deg,
+    var(--ring-color, #1a5c38) var(--marp-ac-ring-angle),
+    #e8ece9 var(--marp-ac-ring-angle),
+    #e8ece9 360deg
+  );
+  animation: marp-ac-ring-fill 1.5s ease-out forwards;
+}
+
+.marp-ac-ring::before {
+  content: "";
+  position: absolute;
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.marp-ac-ring-value {
+  position: relative;
+  z-index: 1;
+  font-size: 1.3em;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.marp-ac-ring-label {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #555;
+  margin-top: 0.2em;
+}
+</style>
+
+<div class="marp-ac-ring-grid">
+  <div class="marp-ac-ring-wrap">
+    <div class="marp-ac-ring" style="--percent: {{PERCENT_1}}; --ring-color: #1a5c38;">
+      <span class="marp-ac-ring-value">{{PERCENT_1}}%</span>
+    </div>
+    <div class="marp-ac-ring-label">{{LABEL_1}}</div>
+  </div>
+  <div class="marp-ac-ring-wrap">
+    <div class="marp-ac-ring" style="--percent: {{PERCENT_2}}; --ring-color: #0c4c52;">
+      <span class="marp-ac-ring-value">{{PERCENT_2}}%</span>
+    </div>
+    <div class="marp-ac-ring-label">{{LABEL_2}}</div>
+  </div>
+  <div class="marp-ac-ring-wrap">
+    <div class="marp-ac-ring" style="--percent: {{PERCENT_3}}; --ring-color: #8b3a2a;">
+      <span class="marp-ac-ring-value">{{PERCENT_3}}%</span>
+    </div>
+    <div class="marp-ac-ring-label">{{LABEL_3}}</div>
+  </div>
+</div>
+
+<!-- Example usage:
+<div class="marp-ac-ring-grid">
+  <div class="marp-ac-ring-wrap">
+    <div class="marp-ac-ring" style="--percent: 87; --ring-color: #1a5c38;">
+      <span class="marp-ac-ring-value">87%</span>
+    </div>
+    <div class="marp-ac-ring-label">On-time Delivery</div>
+  </div>
+  <div class="marp-ac-ring-wrap">
+    <div class="marp-ac-ring" style="--percent: 62; --ring-color: #0c4c52;">
+      <span class="marp-ac-ring-value">62%</span>
+    </div>
+    <div class="marp-ac-ring-label">Utilization Rate</div>
+  </div>
+  <div class="marp-ac-ring-wrap">
+    <div class="marp-ac-ring" style="--percent: 45; --ring-color: #8b3a2a;">
+      <span class="marp-ac-ring-value">45%</span>
+    </div>
+    <div class="marp-ac-ring-label">Risk Mitigation</div>
+  </div>
+</div>
+-->

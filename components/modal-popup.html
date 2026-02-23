@@ -1,0 +1,220 @@
+<!--
+  Component: Modal Popup
+  Category: JS-interactive (HTML output only)
+  Usage: Copy <style scoped>, HTML, and <script> block into your Marp slide
+  Parameters: Replace {{BUTTON_TEXT}} with the trigger button label;
+              Replace {{MODAL_TITLE}} with the popup title;
+              Replace {{MODAL_BODY}} with the popup body content (supports HTML)
+  PDF Fallback: Button visible, modal hidden; content not visible in print
+-->
+
+<!-- ===== Variant 1: Parameterized Modal Popup ===== -->
+<style scoped>
+.mp-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.6em 1.4em;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #fff;
+  background: #1a5c38;
+  border: none;
+  border-radius: 0.35em;
+  cursor: pointer;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0.15em 0.4em rgba(26,92,56,0.25);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+  user-select: none;
+}
+.mp-trigger:hover {
+  background: #17512f;
+  box-shadow: 0 0.2em 0.6em rgba(26,92,56,0.35);
+}
+.mp-trigger:active {
+  transform: scale(0.97);
+}
+.mp-trigger-icon {
+  font-size: 1.1em;
+  line-height: 1;
+}
+.mp-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(20, 30, 22, 0.55);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  backdrop-filter: blur(2px);
+}
+.mp-overlay.mp-show {
+  display: flex;
+  opacity: 1;
+}
+.mp-dialog {
+  background: #fff;
+  border-radius: 0.6em;
+  box-shadow: 0 0.5em 2.5em rgba(0,0,0,0.2);
+  max-width: 32em;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  transform: scale(0.92) translateY(1em);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.mp-overlay.mp-show .mp-dialog {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+.mp-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9em 1.2em;
+  background: #1a5c38;
+  border-radius: 0.6em 0.6em 0 0;
+}
+.mp-dialog-title {
+  font-size: 1em;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.015em;
+}
+.mp-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6em;
+  height: 1.6em;
+  font-size: 1em;
+  color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  line-height: 1;
+  font-weight: 700;
+}
+.mp-close:hover {
+  background: rgba(255,255,255,0.25);
+  color: #fff;
+}
+.mp-dialog-body {
+  padding: 1.2em 1.2em 1.4em;
+  font-size: 0.82em;
+  color: #2d3a32;
+  line-height: 1.7;
+}
+.mp-dialog-body p {
+  margin: 0 0 0.6em;
+}
+.mp-dialog-body p:last-child {
+  margin-bottom: 0;
+}
+.mp-dialog-footer {
+  padding: 0 1.2em 1em;
+  text-align: right;
+}
+.mp-dialog-close-btn {
+  padding: 0.45em 1.2em;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #1a5c38;
+  background: #e6f0ea;
+  border: 1px solid #c8d9ce;
+  border-radius: 0.3em;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.mp-dialog-close-btn:hover {
+  background: #d0e3d6;
+}
+</style>
+
+<button class="mp-trigger">
+  <span class="mp-trigger-icon">&#9432;</span>
+  {{BUTTON_TEXT}}
+</button>
+
+<div class="mp-overlay">
+  <div class="mp-dialog">
+    <div class="mp-dialog-header">
+      <span class="mp-dialog-title">{{MODAL_TITLE}}</span>
+      <button class="mp-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="mp-dialog-body">
+      {{MODAL_BODY}}
+    </div>
+    <div class="mp-dialog-footer">
+      <button class="mp-dialog-close-btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var script = document.currentScript;
+  var slide = script.closest('section') || script.parentElement;
+  var trigger = slide.querySelector('.mp-trigger');
+  var overlay = slide.querySelector('.mp-overlay');
+  var closeBtn = slide.querySelector('.mp-close');
+  var footerClose = slide.querySelector('.mp-dialog-close-btn');
+  var dialog = slide.querySelector('.mp-dialog');
+  if (!trigger || !overlay) return;
+
+  function openModal() {
+    overlay.style.display = 'flex';
+    // Trigger reflow for transition
+    void overlay.offsetHeight;
+    overlay.classList.add('mp-show');
+  }
+
+  function closeModal() {
+    overlay.classList.remove('mp-show');
+    setTimeout(function () {
+      if (!overlay.classList.contains('mp-show')) {
+        overlay.style.display = 'none';
+      }
+    }, 300);
+  }
+
+  trigger.addEventListener('click', function (e) {
+    e.stopPropagation();
+    openModal();
+  });
+
+  closeBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    closeModal();
+  });
+
+  footerClose.addEventListener('click', function (e) {
+    e.stopPropagation();
+    closeModal();
+  });
+
+  overlay.addEventListener('click', function (e) {
+    if (!dialog.contains(e.target)) {
+      closeModal();
+    }
+  });
+
+  // ESC key to close
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('mp-show')) {
+      closeModal();
+    }
+  });
+})();
+</script>

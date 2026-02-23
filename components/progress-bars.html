@@ -1,0 +1,256 @@
+<!--
+  Component: Progress Bars
+  Category: CSS-only
+  Usage: Copy <style scoped> and HTML block into your Marp slide
+  Parameters: Replace {{LABEL}}, {{VALUE}}, {{PERCENT}} etc with actual content
+  PDF Fallback: Bars render at their target width without animation
+-->
+
+
+<!-- ===== Variant 1: Horizontal Bar ===== -->
+<!--
+  A single animated progress bar with label on the left, bar in the middle,
+  and value on the right. Set the --w custom property to the target percentage.
+-->
+
+<style scoped>
+@keyframes marp-pb-fill {
+  from { width: 0%; }
+  to   { width: var(--w, 0%); }
+}
+
+.marp-pb-row {
+  display: flex;
+  align-items: center;
+  margin: 0.5em 0;
+  gap: 0.75em;
+}
+
+.marp-pb-label {
+  flex: 0 0 8em;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #333;
+  text-align: right;
+}
+
+.marp-pb-track {
+  flex: 1;
+  height: 1.1em;
+  background: #e8ece9;
+  border-radius: 0.55em;
+  overflow: hidden;
+  position: relative;
+}
+
+.marp-pb-fill {
+  height: 100%;
+  width: var(--w, 0%);
+  border-radius: 0.55em;
+  background: linear-gradient(90deg, #1a5c38, #0c4c52);
+  animation: marp-pb-fill 1.2s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.marp-pb-value {
+  flex: 0 0 3.5em;
+  font-size: 0.85em;
+  font-weight: 700;
+  color: #1a5c38;
+  text-align: left;
+}
+</style>
+
+<div class="marp-pb-row">
+  <span class="marp-pb-label">{{LABEL}}</span>
+  <div class="marp-pb-track">
+    <div class="marp-pb-fill" style="--w: {{PERCENT}}%;"></div>
+  </div>
+  <span class="marp-pb-value">{{VALUE}}</span>
+</div>
+
+<!-- Example usage:
+<div class="marp-pb-row">
+  <span class="marp-pb-label">Revenue Growth</span>
+  <div class="marp-pb-track">
+    <div class="marp-pb-fill" style="--w: 78%;"></div>
+  </div>
+  <span class="marp-pb-value">78%</span>
+</div>
+-->
+
+
+<!-- ===== Variant 2: Multi-Bar Comparison ===== -->
+<!--
+  Multiple bars stacked vertically with distinct colors for side-by-side
+  comparison. Each bar can have its own label, color, and value.
+-->
+
+<style scoped>
+@keyframes marp-pb-multi-fill {
+  from { width: 0%; }
+  to   { width: var(--w, 0%); }
+}
+
+.marp-pb-multi {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  margin: 1em 0;
+}
+
+.marp-pb-multi-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+
+.marp-pb-multi-label {
+  flex: 0 0 8em;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #333;
+  text-align: right;
+}
+
+.marp-pb-multi-track {
+  flex: 1;
+  height: 1em;
+  background: #eaeaea;
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+
+.marp-pb-multi-fill {
+  height: 100%;
+  width: var(--w, 0%);
+  border-radius: 0.5em;
+  background: var(--bar-color, #1a5c38);
+  animation: marp-pb-multi-fill 1.2s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.marp-pb-multi-value {
+  flex: 0 0 3.5em;
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #444;
+  text-align: left;
+}
+
+/* Predefined bar colors */
+.marp-pb-multi-fill.marp-pb-c1 { --bar-color: #1a5c38; }
+.marp-pb-multi-fill.marp-pb-c2 { --bar-color: #0c4c52; }
+.marp-pb-multi-fill.marp-pb-c3 { --bar-color: #8b3a2a; }
+.marp-pb-multi-fill.marp-pb-c4 { --bar-color: #5b6abf; }
+.marp-pb-multi-fill.marp-pb-c5 { --bar-color: #b8860b; }
+</style>
+
+<div class="marp-pb-multi">
+  <div class="marp-pb-multi-row">
+    <span class="marp-pb-multi-label">{{LABEL_1}}</span>
+    <div class="marp-pb-multi-track">
+      <div class="marp-pb-multi-fill marp-pb-c1" style="--w: {{PERCENT_1}}%;"></div>
+    </div>
+    <span class="marp-pb-multi-value">{{VALUE_1}}</span>
+  </div>
+  <div class="marp-pb-multi-row">
+    <span class="marp-pb-multi-label">{{LABEL_2}}</span>
+    <div class="marp-pb-multi-track">
+      <div class="marp-pb-multi-fill marp-pb-c2" style="--w: {{PERCENT_2}}%;"></div>
+    </div>
+    <span class="marp-pb-multi-value">{{VALUE_2}}</span>
+  </div>
+  <div class="marp-pb-multi-row">
+    <span class="marp-pb-multi-label">{{LABEL_3}}</span>
+    <div class="marp-pb-multi-track">
+      <div class="marp-pb-multi-fill marp-pb-c3" style="--w: {{PERCENT_3}}%;"></div>
+    </div>
+    <span class="marp-pb-multi-value">{{VALUE_3}}</span>
+  </div>
+</div>
+
+<!-- Example usage:
+<div class="marp-pb-multi">
+  <div class="marp-pb-multi-row">
+    <span class="marp-pb-multi-label">North America</span>
+    <div class="marp-pb-multi-track">
+      <div class="marp-pb-multi-fill marp-pb-c1" style="--w: 85%;"></div>
+    </div>
+    <span class="marp-pb-multi-value">$4.2M</span>
+  </div>
+  <div class="marp-pb-multi-row">
+    <span class="marp-pb-multi-label">Europe</span>
+    <div class="marp-pb-multi-track">
+      <div class="marp-pb-multi-fill marp-pb-c2" style="--w: 62%;"></div>
+    </div>
+    <span class="marp-pb-multi-value">$3.1M</span>
+  </div>
+  <div class="marp-pb-multi-row">
+    <span class="marp-pb-multi-label">Asia Pacific</span>
+    <div class="marp-pb-multi-track">
+      <div class="marp-pb-multi-fill marp-pb-c3" style="--w: 45%;"></div>
+    </div>
+    <span class="marp-pb-multi-value">$2.2M</span>
+  </div>
+</div>
+-->
+
+
+<!-- ===== Variant 3: Mini Inline Bar ===== -->
+<!--
+  Compact progress bar designed for use inside table cells or inline contexts.
+  Minimal height, no label -- just bar + value in a tight layout.
+-->
+
+<style scoped>
+@keyframes marp-pb-mini-fill {
+  from { width: 0%; }
+  to   { width: var(--w, 0%); }
+}
+
+.marp-pb-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-width: 6em;
+}
+
+.marp-pb-mini-track {
+  flex: 1;
+  height: 0.45em;
+  min-width: 4em;
+  background: #e0e4e1;
+  border-radius: 0.25em;
+  overflow: hidden;
+}
+
+.marp-pb-mini-fill {
+  height: 100%;
+  width: var(--w, 0%);
+  border-radius: 0.25em;
+  background: var(--bar-color, #1a5c38);
+  animation: marp-pb-mini-fill 0.8s ease-out forwards;
+}
+
+.marp-pb-mini-val {
+  font-size: 0.75em;
+  font-weight: 700;
+  color: #444;
+  white-space: nowrap;
+}
+</style>
+
+<!-- Inline usage inside a table cell or paragraph -->
+<span class="marp-pb-mini">
+  <span class="marp-pb-mini-track">
+    <span class="marp-pb-mini-fill" style="--w: {{PERCENT}}%;"></span>
+  </span>
+  <span class="marp-pb-mini-val">{{VALUE}}</span>
+</span>
+
+<!-- Example usage in a Marp table:
+| Metric          | Status |
+|-----------------|--------|
+| Customer NPS    | <span class="marp-pb-mini"><span class="marp-pb-mini-track"><span class="marp-pb-mini-fill" style="--w: 72%;"></span></span><span class="marp-pb-mini-val">72</span></span> |
+| Employee Sat.   | <span class="marp-pb-mini"><span class="marp-pb-mini-track"><span class="marp-pb-mini-fill" style="--w: 58%; --bar-color: #8b3a2a;"></span></span><span class="marp-pb-mini-val">58</span></span> |
+| Delivery SLA    | <span class="marp-pb-mini"><span class="marp-pb-mini-track"><span class="marp-pb-mini-fill" style="--w: 91%;"></span></span><span class="marp-pb-mini-val">91%</span></span> |
+-->

@@ -1,0 +1,243 @@
+<!--
+  Component: Collapsible Panel / Accordion
+  Category: JS-interactive (HTML output only)
+  Usage: Copy <style scoped>, HTML, and <script> block into your Marp slide
+  Parameters: Replace {{TITLE_N}} with panel header text;
+              Replace {{CONTENT_N}} with panel body content (supports HTML)
+  PDF Fallback: All panels visible with headers styled, chevron icons static
+-->
+
+<!-- ===== Variant 1: Single Collapsible Panel ===== -->
+<style scoped>
+.cl-panel {
+  margin: 0.5em 0;
+  border-radius: 0.4em;
+  overflow: hidden;
+  box-shadow: 0 0.1em 0.35em rgba(0,0,0,0.07);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.cl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7em 1em;
+  background: #1a5c38;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  font-size: 0.9em;
+  letter-spacing: 0.015em;
+  transition: background 0.2s ease;
+}
+.cl-header:hover {
+  background: #17512f;
+}
+.cl-chevron {
+  display: inline-block;
+  font-size: 0.75em;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 0.8em;
+}
+.cl-panel.cl-open .cl-chevron {
+  transform: rotate(180deg);
+}
+.cl-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  background: #fff;
+  padding: 0 1em;
+}
+.cl-panel.cl-open .cl-body {
+  padding: 0.8em 1em;
+}
+.cl-body-inner {
+  font-size: 0.8em;
+  color: #2d3a32;
+  line-height: 1.6;
+}
+</style>
+
+<div class="cl-panel" data-cl-mode="single">
+  <div class="cl-header">
+    {{TITLE_1}}
+    <span class="cl-chevron">&#9660;</span>
+  </div>
+  <div class="cl-body">
+    <div class="cl-body-inner">{{CONTENT_1}}</div>
+  </div>
+</div>
+
+<div class="cl-panel" data-cl-mode="single">
+  <div class="cl-header">
+    {{TITLE_2}}
+    <span class="cl-chevron">&#9660;</span>
+  </div>
+  <div class="cl-body">
+    <div class="cl-body-inner">{{CONTENT_2}}</div>
+  </div>
+</div>
+
+<div class="cl-panel" data-cl-mode="single">
+  <div class="cl-header">
+    {{TITLE_3}}
+    <span class="cl-chevron">&#9660;</span>
+  </div>
+  <div class="cl-body">
+    <div class="cl-body-inner">{{CONTENT_3}}</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var script = document.currentScript;
+  var slide = script.closest('section') || script.parentElement;
+  var singles = slide.querySelectorAll('.cl-panel[data-cl-mode="single"]');
+
+  singles.forEach(function (panel) {
+    var header = panel.querySelector('.cl-header');
+    var body = panel.querySelector('.cl-body');
+    header.addEventListener('click', function () {
+      if (panel.classList.contains('cl-open')) {
+        panel.classList.remove('cl-open');
+        body.style.maxHeight = '0';
+      } else {
+        panel.classList.add('cl-open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
+  });
+})();
+</script>
+
+
+<!-- ===== Variant 2: Accordion (only one open at a time) ===== -->
+<style scoped>
+.ac-group {
+  margin: 0.5em 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.ac-panel {
+  border-radius: 0.4em;
+  overflow: hidden;
+  box-shadow: 0 0.1em 0.35em rgba(0,0,0,0.07);
+  margin-bottom: 0.35em;
+}
+.ac-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7em 1em;
+  background: #0c4c52;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  font-size: 0.9em;
+  letter-spacing: 0.015em;
+  transition: background 0.2s ease;
+}
+.ac-header:hover {
+  background: #0a4148;
+}
+.ac-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  font-size: 0.85em;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-left: 0.8em;
+  transition: transform 0.3s ease;
+  border: 1.5px solid rgba(255,255,255,0.6);
+  border-radius: 50%;
+  line-height: 1;
+}
+.ac-panel.ac-open .ac-icon {
+  transform: rotate(45deg);
+}
+.ac-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  background: #fff;
+  padding: 0 1em;
+}
+.ac-panel.ac-open .ac-body {
+  padding: 0.8em 1em;
+}
+.ac-body-inner {
+  font-size: 0.8em;
+  color: #2d3a32;
+  line-height: 1.6;
+}
+</style>
+
+<div class="ac-group">
+  <div class="ac-panel">
+    <div class="ac-header">
+      {{TITLE_1}}
+      <span class="ac-icon">+</span>
+    </div>
+    <div class="ac-body">
+      <div class="ac-body-inner">{{CONTENT_1}}</div>
+    </div>
+  </div>
+  <div class="ac-panel">
+    <div class="ac-header">
+      {{TITLE_2}}
+      <span class="ac-icon">+</span>
+    </div>
+    <div class="ac-body">
+      <div class="ac-body-inner">{{CONTENT_2}}</div>
+    </div>
+  </div>
+  <div class="ac-panel">
+    <div class="ac-header">
+      {{TITLE_3}}
+      <span class="ac-icon">+</span>
+    </div>
+    <div class="ac-body">
+      <div class="ac-body-inner">{{CONTENT_3}}</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var script = document.currentScript;
+  var slide = script.closest('section') || script.parentElement;
+  var group = slide.querySelector('.ac-group');
+  if (!group) return;
+
+  var panels = group.querySelectorAll('.ac-panel');
+
+  function closePanel(panel) {
+    panel.classList.remove('ac-open');
+    panel.querySelector('.ac-body').style.maxHeight = '0';
+  }
+
+  function openPanel(panel) {
+    panel.classList.add('ac-open');
+    var body = panel.querySelector('.ac-body');
+    body.style.maxHeight = body.scrollHeight + 'px';
+  }
+
+  panels.forEach(function (panel) {
+    var header = panel.querySelector('.ac-header');
+    header.addEventListener('click', function () {
+      var isOpen = panel.classList.contains('ac-open');
+      // Close all panels first
+      panels.forEach(function (p) { closePanel(p); });
+      // Open clicked panel if it was closed
+      if (!isOpen) {
+        openPanel(panel);
+      }
+    });
+  });
+})();
+</script>

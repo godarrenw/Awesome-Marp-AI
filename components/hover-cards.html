@@ -1,0 +1,294 @@
+<!--
+  Component: Hover Cards
+  Category: CSS-only
+  Usage: Copy <style scoped> and HTML block into your Marp slide
+  Parameters: Replace {{TITLE}}, {{BODY}}, {{NUMBER}}, {{TREND}} etc with actual content
+  PDF Fallback: Cards render in their default (non-hovered) state with visible content
+-->
+
+
+<!-- ===== Variant 1: Info Card ===== -->
+<!--
+  A content card with title and body text. Lifts on hover with an elevated
+  shadow effect. Suitable for key takeaways, insights, or summary points.
+-->
+
+<style scoped>
+.marp-hc-info {
+  background: #ffffff;
+  border: 1px solid #c8c8c8;
+  border-radius: 0.5em;
+  padding: 1.25em 1.5em;
+  margin: 0.5em;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+
+.marp-hc-info:hover {
+  transform: translateY(-0.25em);
+  box-shadow: 0 0.5em 1.5em rgba(0, 0, 0, 0.12);
+}
+
+.marp-hc-info-title {
+  font-size: 1em;
+  font-weight: 700;
+  color: #1a5c38;
+  margin: 0 0 0.5em 0;
+  padding-bottom: 0.4em;
+  border-bottom: 2px solid #f5f8f6;
+}
+
+.marp-hc-info-body {
+  font-size: 0.85em;
+  line-height: 1.5;
+  color: #444;
+  margin: 0;
+}
+
+/* Grid layout for multiple cards */
+.marp-hc-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14em, 1fr));
+  gap: 1em;
+  margin: 1em 0;
+}
+</style>
+
+<div class="marp-hc-info-grid">
+  <div class="marp-hc-info">
+    <div class="marp-hc-info-title">{{TITLE_1}}</div>
+    <p class="marp-hc-info-body">{{BODY_1}}</p>
+  </div>
+  <div class="marp-hc-info">
+    <div class="marp-hc-info-title">{{TITLE_2}}</div>
+    <p class="marp-hc-info-body">{{BODY_2}}</p>
+  </div>
+  <div class="marp-hc-info">
+    <div class="marp-hc-info-title">{{TITLE_3}}</div>
+    <p class="marp-hc-info-body">{{BODY_3}}</p>
+  </div>
+</div>
+
+<!-- Example usage:
+<div class="marp-hc-info-grid">
+  <div class="marp-hc-info">
+    <div class="marp-hc-info-title">Market Expansion</div>
+    <p class="marp-hc-info-body">Entering three new APAC markets by Q3 will diversify revenue streams and reduce dependency on North American sales.</p>
+  </div>
+  <div class="marp-hc-info">
+    <div class="marp-hc-info-title">Cost Optimization</div>
+    <p class="marp-hc-info-body">Consolidating vendor contracts is projected to yield 15-18% savings in operational expenditure within 12 months.</p>
+  </div>
+  <div class="marp-hc-info">
+    <div class="marp-hc-info-title">Digital Transformation</div>
+    <p class="marp-hc-info-body">Migrating legacy systems to cloud infrastructure reduces maintenance burden and enables faster product iteration cycles.</p>
+  </div>
+</div>
+-->
+
+
+<!-- ===== Variant 2: KPI Card ===== -->
+<!--
+  A card designed for key performance indicators. Features a large number,
+  a descriptive label, and a trend indicator. Left border accent provides
+  visual grouping and color coding.
+-->
+
+<style scoped>
+.marp-hc-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+  gap: 1em;
+  margin: 1em 0;
+}
+
+.marp-hc-kpi {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid var(--kpi-accent, #1a5c38);
+  border-radius: 0.4em;
+  padding: 1em 1.25em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.marp-hc-kpi:hover {
+  transform: translateY(-0.15em);
+  box-shadow: 0 0.3em 1em rgba(0, 0, 0, 0.1);
+}
+
+.marp-hc-kpi-number {
+  font-size: 2em;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.1;
+  margin-bottom: 0.15em;
+}
+
+.marp-hc-kpi-label {
+  font-size: 0.75em;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5em;
+}
+
+.marp-hc-kpi-trend {
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 0.25em;
+  display: inline-block;
+}
+
+.marp-hc-kpi-trend.marp-hc-up {
+  color: #1a5c38;
+  background: #e6f4ec;
+}
+
+.marp-hc-kpi-trend.marp-hc-down {
+  color: #8b3a2a;
+  background: #fce8e4;
+}
+
+.marp-hc-kpi-trend.marp-hc-flat {
+  color: #666;
+  background: #f0f0f0;
+}
+</style>
+
+<div class="marp-hc-kpi-grid">
+  <div class="marp-hc-kpi" style="--kpi-accent: #1a5c38;">
+    <div class="marp-hc-kpi-number">{{NUMBER_1}}</div>
+    <div class="marp-hc-kpi-label">{{LABEL_1}}</div>
+    <span class="marp-hc-kpi-trend marp-hc-up">{{TREND_1}}</span>
+  </div>
+  <div class="marp-hc-kpi" style="--kpi-accent: #0c4c52;">
+    <div class="marp-hc-kpi-number">{{NUMBER_2}}</div>
+    <div class="marp-hc-kpi-label">{{LABEL_2}}</div>
+    <span class="marp-hc-kpi-trend marp-hc-down">{{TREND_2}}</span>
+  </div>
+  <div class="marp-hc-kpi" style="--kpi-accent: #8b3a2a;">
+    <div class="marp-hc-kpi-number">{{NUMBER_3}}</div>
+    <div class="marp-hc-kpi-label">{{LABEL_3}}</div>
+    <span class="marp-hc-kpi-trend marp-hc-flat">{{TREND_3}}</span>
+  </div>
+</div>
+
+<!-- Example usage:
+<div class="marp-hc-kpi-grid">
+  <div class="marp-hc-kpi" style="--kpi-accent: #1a5c38;">
+    <div class="marp-hc-kpi-number">$12.4M</div>
+    <div class="marp-hc-kpi-label">Total Revenue</div>
+    <span class="marp-hc-kpi-trend marp-hc-up">+18% YoY</span>
+  </div>
+  <div class="marp-hc-kpi" style="--kpi-accent: #0c4c52;">
+    <div class="marp-hc-kpi-number">34.2%</div>
+    <div class="marp-hc-kpi-label">Gross Margin</div>
+    <span class="marp-hc-kpi-trend marp-hc-down">-2.1pp</span>
+  </div>
+  <div class="marp-hc-kpi" style="--kpi-accent: #8b3a2a;">
+    <div class="marp-hc-kpi-number">1,247</div>
+    <div class="marp-hc-kpi-label">Active Clients</div>
+    <span class="marp-hc-kpi-trend marp-hc-flat">+0.3%</span>
+  </div>
+</div>
+-->
+
+
+<!-- ===== Variant 3: Icon Card ===== -->
+<!--
+  A card with a FontAwesome icon, title, and description. Background
+  subtly changes on hover. Ideal for capability overviews, service
+  offerings, or feature highlights.
+  Requires: FontAwesome CDN (add to Marp HTML or theme)
+-->
+
+<style scoped>
+.marp-hc-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+  gap: 1em;
+  margin: 1em 0;
+}
+
+.marp-hc-icon {
+  background: #f5f8f6;
+  border: 1px solid transparent;
+  border-radius: 0.5em;
+  padding: 1.25em;
+  text-align: center;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+  cursor: default;
+}
+
+.marp-hc-icon:hover {
+  background: #ffffff;
+  border-color: #1a5c38;
+  transform: translateY(-0.15em);
+}
+
+.marp-hc-icon-symbol {
+  font-size: 1.8em;
+  color: #1a5c38;
+  margin-bottom: 0.4em;
+  transition: color 0.25s ease;
+}
+
+.marp-hc-icon:hover .marp-hc-icon-symbol {
+  color: #0c4c52;
+}
+
+.marp-hc-icon-title {
+  font-size: 0.9em;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.35em;
+}
+
+.marp-hc-icon-desc {
+  font-size: 0.75em;
+  line-height: 1.45;
+  color: #555;
+  margin: 0;
+}
+</style>
+
+<div class="marp-hc-icon-grid">
+  <div class="marp-hc-icon">
+    <div class="marp-hc-icon-symbol">{{ICON_1}}</div>
+    <div class="marp-hc-icon-title">{{TITLE_1}}</div>
+    <p class="marp-hc-icon-desc">{{DESC_1}}</p>
+  </div>
+  <div class="marp-hc-icon">
+    <div class="marp-hc-icon-symbol">{{ICON_2}}</div>
+    <div class="marp-hc-icon-title">{{TITLE_2}}</div>
+    <p class="marp-hc-icon-desc">{{DESC_2}}</p>
+  </div>
+  <div class="marp-hc-icon">
+    <div class="marp-hc-icon-symbol">{{ICON_3}}</div>
+    <div class="marp-hc-icon-title">{{TITLE_3}}</div>
+    <p class="marp-hc-icon-desc">{{DESC_3}}</p>
+  </div>
+</div>
+
+<!-- Example usage (with FontAwesome or Unicode symbols):
+<div class="marp-hc-icon-grid">
+  <div class="marp-hc-icon">
+    <div class="marp-hc-icon-symbol"><i class="fas fa-chart-line"></i></div>
+    <div class="marp-hc-icon-title">Analytics</div>
+    <p class="marp-hc-icon-desc">Real-time dashboards and predictive modeling for data-driven decisions.</p>
+  </div>
+  <div class="marp-hc-icon">
+    <div class="marp-hc-icon-symbol"><i class="fas fa-shield-alt"></i></div>
+    <div class="marp-hc-icon-title">Security</div>
+    <p class="marp-hc-icon-desc">Enterprise-grade security with SOC 2 compliance and end-to-end encryption.</p>
+  </div>
+  <div class="marp-hc-icon">
+    <div class="marp-hc-icon-symbol"><i class="fas fa-cogs"></i></div>
+    <div class="marp-hc-icon-title">Automation</div>
+    <p class="marp-hc-icon-desc">Workflow automation that reduces manual processes by up to 60%.</p>
+  </div>
+</div>
+-->
