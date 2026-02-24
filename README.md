@@ -15,24 +15,13 @@
 
 ## 快速开始
 
-将以下提示词复制粘贴到 **Claude Code**，即可自动完成环境安装和首次使用：
+将以下提示词复制粘贴到 **Claude Code**，即可自动完成克隆、安装和配置：
 
 ```
-帮我安装 Awesome-Marp-AI 的运行环境。步骤：
-1. 检查 Node.js 和 Python3 是否可用
-2. 安装 Marp CLI：npm install -g @marp-team/marp-cli
-3. 安装 Python 依赖：pip install PyMuPDF>=1.24.0
-4. 用 marp --version 和 python -c "import fitz" 验证安装成功
-全部完成后告诉我，然后我就可以用 /generate-ppt 来转换 PDF 了。
+帮我安装配置 Awesome-Marp-AI（https://github.com/godarrenw/Awesome-Marp-AI），克隆仓库并安装所有运行依赖，完成后验证环境可用。
 ```
 
-安装完成后，把 PDF 文件放入项目目录，运行：
-
-```
-/generate-ppt <pdf文件路径>
-```
-
-Claude Code 会自动执行完整的 SOP 流程：解析 PDF、询问偏好、生成方案、导出文件。
+安装完成后，把 PDF 文件放入项目目录，运行 `/generate-ppt <pdf文件路径>` 即可生成演示文稿。
 
 **其他 AI 工具也可以使用** —— 只需让 AI 阅读 `docs/sop.md`，按 SOP 流程执行即可。
 

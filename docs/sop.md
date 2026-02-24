@@ -420,8 +420,11 @@ theme: am_consulting
 paginate: true
 headingDivider: [2,3]
 footer: \ *部门/作者* *报告标题* *日期*
+title: 报告标题
 ---
 ```
+
+> `title` 会设置 HTML 标签页标题。如果不设置，Marp 会从封面 `# <!-- fit -->` 标题中提取，导致标签页显示代码。
 
 #### 关键生成规则（必须严格遵守）
 
@@ -596,6 +599,7 @@ theme: am_consulting
 paginate: true
 headingDivider: [2,3]
 footer: \ *部门名称* *报告标题* *2026年2月*
+title: 报告标题
 ---
 
 

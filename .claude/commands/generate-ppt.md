@@ -215,6 +215,7 @@ theme: am_consulting
 paginate: true
 headingDivider: [2,3]
 footer: \ *部门/作者名* *演示文稿标题* *日期*
+title: 演示文稿标题
 ---
 ```
 
