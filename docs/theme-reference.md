@@ -239,15 +239,15 @@ Author / Date / Notes
 <!-- _footer: "" -->
 <!-- _paginate: "" -->
 
-- [Section One](#5)
-- [Section Two](#10)
-- [Section Three](#15)
-- [Section Four](#20)
+- [Section One](#1-section-one)
+- [Section Two](#2-section-two)
+- [Section Three](#3-section-three)
+- [Section Four](#4-section-four)
 ```
 
 **Notes:**
 - The `header` value (e.g., `"CONTENTS"`) becomes the background watermark text.
-- List items can be plain text or Marp internal links (`[text](#page)`).
+- List items can be plain text or Marp internal links using heading slugs (`[text](#heading-slug)`). The slug is the target `##` heading text, lowercased, with spaces replaced by hyphens and punctuation removed (e.g., `## 1. Introduction` → `#1-introduction`). Do **not** use numeric page anchors (`#5`)—they are fragile and may not work in HTML output.
 - The counter resets per slide automatically.
 
 ---
@@ -255,6 +255,8 @@ Author / Date / Notes
 ## 5. Column Layouts
 
 All column layouts use CSS Grid. The heading (`h2` or `h3`) spans the full width as a top row. Content is placed inside `<div>` elements with specific class names.
+
+**Lead Text (Topic Sentence) Support:** All grid layouts include a `leadtext` grid area between the heading and the panels. Any `<p>` that is a direct child of the section (i.e., a plain paragraph written between the heading and the `<div>` elements) is automatically placed in this area. This is designed for topic sentences that summarize the page. When no such paragraph exists, the row collapses to zero height.
 
 ### Div Class Names (Columns)
 
@@ -294,6 +296,8 @@ The `*img` variants add `display: flex; align-items: center; justify-content: ce
 ## Slide Title
 
 <!-- _class: cols-2 -->
+
+Topic sentence summarizing the entire page (auto-placed in leadtext area).
 
 <div class="ldiv">
 
@@ -487,6 +491,8 @@ Extended analysis and discussion goes here.
 ## 6. Row Layouts
 
 All row layouts use CSS Grid with a full-width heading row on top, followed by a top panel and a bottom panel stacked vertically.
+
+**Lead Text Support:** Same as column layouts -- a `leadtext` grid area sits between the heading and the panels for topic sentence paragraphs.
 
 ### Div Class Names (Rows)
 

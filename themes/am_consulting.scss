@@ -53,10 +53,12 @@ section {
   color: var(--color-text);
   line-height: 1.2;
   text-align: left;
-  padding: 40px 60px 50px 60px;
+  padding: 52px 60px 50px 60px;
   background-color: var(--color-white);
-  /* KEY: pin content to top, title never floats */
-  justify-content: start;
+  /* Grid pins all content to top-left — overrides Marp's default flex center */
+  display: grid;
+  grid-template-columns: 100%;
+  align-content: start;
 }
 
 
@@ -81,6 +83,7 @@ h2 {
   color: var(--color-primary);
   border-bottom: 2.5px solid var(--color-primary);
   padding-bottom: 6px;
+  margin-top: 0;
   margin-bottom: 18px;
 }
 
@@ -89,6 +92,7 @@ h3 {
   font-size: var(--font-size-h3);
   font-weight: 700;
   color: var(--color-primary);
+  margin-top: 0;
   margin-bottom: 14px;
 }
 
@@ -558,6 +562,7 @@ section.toc_a header {
   line-height: 150px;
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 0.6px var(--color-border);
+  pointer-events: none;
 }
 
 
@@ -571,14 +576,17 @@ section.toc_a header {
 section.cols-2 {
   overflow: visible;
   display: grid;
-  gap: 1.2rem;
+  row-gap: 0.4rem;
+  column-gap: 1.2rem;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-template-areas:
     "slideheading slideheading"
+    "leadtext     leadtext"
     "leftpanel    rightpanel";
 }
 section.cols-2 h2, section.cols-2 h3 { grid-area: slideheading; }
+section.cols-2 > p { grid-area: leadtext; }
 section.cols-2 .ldiv { grid-area: leftpanel; }
 section.cols-2 .rdiv { grid-area: rightpanel; }
 section.cols-2 .limg { grid-area: leftpanel; display: flex; align-items: center; justify-content: center; }
@@ -588,14 +596,17 @@ section.cols-2 .rimg { grid-area: rightpanel; display: flex; align-items: center
 section.cols-2-64 {
   overflow: visible;
   display: grid;
-  gap: 1.2rem;
+  row-gap: 0.4rem;
+  column-gap: 1.2rem;
   grid-template-columns: 60% 40%;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-template-areas:
     "slideheading slideheading"
+    "leadtext     leadtext"
     "leftpanel    rightpanel";
 }
 section.cols-2-64 h2, section.cols-2-64 h3 { grid-area: slideheading; }
+section.cols-2-64 > p { grid-area: leadtext; }
 section.cols-2-64 .ldiv { grid-area: leftpanel; }
 section.cols-2-64 .rdiv { grid-area: rightpanel; }
 section.cols-2-64 .limg { grid-area: leftpanel; display: flex; align-items: center; justify-content: center; }
@@ -605,14 +616,17 @@ section.cols-2-64 .rimg { grid-area: rightpanel; display: flex; align-items: cen
 section.cols-2-73 {
   overflow: visible;
   display: grid;
-  gap: 1.2rem;
+  row-gap: 0.4rem;
+  column-gap: 1.2rem;
   grid-template-columns: 70% 30%;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-template-areas:
     "slideheading slideheading"
+    "leadtext     leadtext"
     "leftpanel    rightpanel";
 }
 section.cols-2-73 h2, section.cols-2-73 h3 { grid-area: slideheading; }
+section.cols-2-73 > p { grid-area: leadtext; }
 section.cols-2-73 .ldiv { grid-area: leftpanel; }
 section.cols-2-73 .rdiv { grid-area: rightpanel; }
 section.cols-2-73 .limg { grid-area: leftpanel; display: flex; align-items: center; justify-content: center; }
@@ -622,14 +636,17 @@ section.cols-2-73 .rimg { grid-area: rightpanel; display: flex; align-items: cen
 section.cols-2-46 {
   overflow: visible;
   display: grid;
-  gap: 1.2rem;
+  row-gap: 0.4rem;
+  column-gap: 1.2rem;
   grid-template-columns: 40% 60%;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-template-areas:
     "slideheading slideheading"
+    "leadtext     leadtext"
     "leftpanel    rightpanel";
 }
 section.cols-2-46 h2, section.cols-2-46 h3 { grid-area: slideheading; }
+section.cols-2-46 > p { grid-area: leadtext; }
 section.cols-2-46 .ldiv { grid-area: leftpanel; }
 section.cols-2-46 .rdiv { grid-area: rightpanel; }
 section.cols-2-46 .limg { grid-area: leftpanel; display: flex; align-items: center; justify-content: center; }
@@ -639,14 +656,17 @@ section.cols-2-46 .rimg { grid-area: rightpanel; display: flex; align-items: cen
 section.cols-2-37 {
   overflow: visible;
   display: grid;
-  gap: 1.2rem;
+  row-gap: 0.4rem;
+  column-gap: 1.2rem;
   grid-template-columns: 30% 70%;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-template-areas:
     "slideheading slideheading"
+    "leadtext     leadtext"
     "leftpanel    rightpanel";
 }
 section.cols-2-37 h2, section.cols-2-37 h3 { grid-area: slideheading; }
+section.cols-2-37 > p { grid-area: leadtext; }
 section.cols-2-37 .ldiv { grid-area: leftpanel; }
 section.cols-2-37 .rdiv { grid-area: rightpanel; }
 section.cols-2-37 .limg { grid-area: leftpanel; display: flex; align-items: center; justify-content: center; }
@@ -660,14 +680,17 @@ section.cols-2-37 .rimg { grid-area: rightpanel; display: flex; align-items: cen
 section.cols-3 {
   overflow: visible;
   display: grid;
-  gap: 1rem;
+  row-gap: 0.4rem;
+  column-gap: 1rem;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-template-areas:
     "slideheading slideheading slideheading"
+    "leadtext     leadtext     leadtext"
     "leftpanel    middlepanel  rightpanel";
 }
 section.cols-3 h2, section.cols-3 h3 { grid-area: slideheading; }
+section.cols-3 > p { grid-area: leadtext; }
 section.cols-3 .ldiv { grid-area: leftpanel; }
 section.cols-3 .mdiv { grid-area: middlepanel; }
 section.cols-3 .rdiv { grid-area: rightpanel; }
@@ -685,14 +708,16 @@ section.rows-2 {
   overflow: visible;
   display: grid;
   gap: 0.4rem;
-  grid-template-rows: auto 1fr 1fr;
+  grid-template-rows: auto auto 1fr 1fr;
   grid-template-columns: 100%;
   grid-template-areas:
     "slideheading"
+    "leadtext"
     "toppanel"
     "bottompanel";
 }
 section.rows-2 h2, section.rows-2 h3 { grid-area: slideheading; }
+section.rows-2 > p { grid-area: leadtext; }
 section.rows-2 .tdiv { grid-area: toppanel; }
 section.rows-2 .bdiv { grid-area: bottompanel; }
 section.rows-2 .timg { grid-area: toppanel; display: flex; align-items: center; justify-content: center; }
@@ -703,14 +728,16 @@ section.rows-2-64 {
   overflow: visible;
   display: grid;
   gap: 0.4rem;
-  grid-template-rows: auto 3fr 2fr;
+  grid-template-rows: auto auto 3fr 2fr;
   grid-template-columns: 100%;
   grid-template-areas:
     "slideheading"
+    "leadtext"
     "toppanel"
     "bottompanel";
 }
 section.rows-2-64 h2, section.rows-2-64 h3 { grid-area: slideheading; }
+section.rows-2-64 > p { grid-area: leadtext; }
 section.rows-2-64 .tdiv { grid-area: toppanel; }
 section.rows-2-64 .bdiv { grid-area: bottompanel; }
 section.rows-2-64 .timg { grid-area: toppanel; display: flex; align-items: center; justify-content: center; }
@@ -721,14 +748,16 @@ section.rows-2-73 {
   overflow: visible;
   display: grid;
   gap: 0.4rem;
-  grid-template-rows: auto 7fr 3fr;
+  grid-template-rows: auto auto 7fr 3fr;
   grid-template-columns: 100%;
   grid-template-areas:
     "slideheading"
+    "leadtext"
     "toppanel"
     "bottompanel";
 }
 section.rows-2-73 h2, section.rows-2-73 h3 { grid-area: slideheading; }
+section.rows-2-73 > p { grid-area: leadtext; }
 section.rows-2-73 .tdiv { grid-area: toppanel; }
 section.rows-2-73 .bdiv { grid-area: bottompanel; }
 section.rows-2-73 .timg { grid-area: toppanel; display: flex; align-items: center; justify-content: center; }
@@ -739,14 +768,16 @@ section.rows-2-46 {
   overflow: visible;
   display: grid;
   gap: 0.4rem;
-  grid-template-rows: auto 2fr 3fr;
+  grid-template-rows: auto auto 2fr 3fr;
   grid-template-columns: 100%;
   grid-template-areas:
     "slideheading"
+    "leadtext"
     "toppanel"
     "bottompanel";
 }
 section.rows-2-46 h2, section.rows-2-46 h3 { grid-area: slideheading; }
+section.rows-2-46 > p { grid-area: leadtext; }
 section.rows-2-46 .tdiv { grid-area: toppanel; }
 section.rows-2-46 .bdiv { grid-area: bottompanel; }
 section.rows-2-46 .timg { grid-area: toppanel; display: flex; align-items: center; justify-content: center; }
@@ -757,18 +788,29 @@ section.rows-2-37 {
   overflow: visible;
   display: grid;
   gap: 0.4rem;
-  grid-template-rows: auto 3fr 7fr;
+  grid-template-rows: auto auto 3fr 7fr;
   grid-template-columns: 100%;
   grid-template-areas:
     "slideheading"
+    "leadtext"
     "toppanel"
     "bottompanel";
 }
 section.rows-2-37 h2, section.rows-2-37 h3 { grid-area: slideheading; }
+section.rows-2-37 > p { grid-area: leadtext; }
 section.rows-2-37 .tdiv { grid-area: toppanel; }
 section.rows-2-37 .bdiv { grid-area: bottompanel; }
 section.rows-2-37 .timg { grid-area: toppanel; display: flex; align-items: center; justify-content: center; }
 section.rows-2-37 .bimg { grid-area: bottompanel; display: flex; align-items: center; justify-content: center; }
+
+
+/* --- Leadtext: compact spacing for topic-sentence paragraphs in grid layouts --- */
+section[class*="cols-"] > p,
+section[class*="rows-"] > p,
+section.cols-3 > p,
+section.footnote > p {
+  margin: 0;
+}
 
 
 /* =============================================================
@@ -902,10 +944,11 @@ section.bq-black blockquote > p:nth-child(1) strong {
 section.footnote {
   display: grid;
   gap: 0.5em;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas: "slideheading" "content" "footnote";
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas: "slideheading" "leadtext" "content" "footnote";
 }
 section.footnote h2, section.footnote h3 { grid-area: slideheading; }
+section.footnote > p { grid-area: leadtext; }
 section.footnote .tdiv {
   grid-area: content;
 }
